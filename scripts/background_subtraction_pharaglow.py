@@ -3,11 +3,13 @@
 """background_subtraction.py: Script for background subtraction in worm motility videos."""
 
 import argparse
+
+import imageio.v3 as iio
 import numpy as np
 import pims
 import skimage.io as io
-from skimage import util, filters, morphology
-import imageio.v3 as iio
+from skimage import filters, morphology, util
+
 
 @pims.pipeline
 def subtract_bg(img, bg):
@@ -67,16 +69,16 @@ def process_video(input_file, output_file, bg_window, smooth, apply_threshold):
     frames = io.imread(input_file)
     bg = calculate_background(frames, bg_window)
     subtracted_frames = [subtract_bg(frame, bg) for frame in frames]
-    
+
     if smooth:
         subtracted_frames = [filters.gaussian(frame, smooth, preserve_range=True) for frame in subtracted_frames]
-    
+
     if apply_threshold:
         thresholded_frames = [preprocess(frame, smooth, threshold=filters.threshold_yen(frame)) for frame in subtracted_frames]
         processed_frames = [util.img_as_ubyte(frame) for frame in thresholded_frames]
     else:
         processed_frames = [util.img_as_ubyte(frame) for frame in subtracted_frames]
-    
+
     fps = iio.immeta(input_file)['fps']
     iio.imwrite(output_file, processed_frames, fps=fps)
 

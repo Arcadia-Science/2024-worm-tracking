@@ -1,7 +1,9 @@
+import json
 from pathlib import Path
+
 import click
 import nd2
-import json
+
 
 def serialize_metadata(data):
     """

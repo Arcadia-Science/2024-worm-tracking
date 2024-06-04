@@ -1,9 +1,11 @@
 from pathlib import Path
+
 import click
+import imageio
 import nd2
 import numpy as np
-import imageio
 from tqdm import tqdm
+
 
 @click.option("--nd2-path", type=Path, help="Path to the nd2 file")
 @click.option("--mov-path", type=Path, help="Path to output mov file")
