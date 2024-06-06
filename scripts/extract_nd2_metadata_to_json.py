@@ -15,7 +15,7 @@ def serialize_metadata(data):
         return {key: serialize_metadata(value) for key, value in data.items()}
     elif isinstance(data, list):
         return [serialize_metadata(item) for item in data]
-    elif isinstance(data, (str, int, float, bool, type(None))):
+    elif isinstance(data, str | int | float | bool | type(None)):
         return data
     else:
         return str(data)
