@@ -8,7 +8,8 @@ import nd2
 def serialize_metadata(data):
     """
     Convert complex metadata objects to a serializable format.
-    Handles dictionaries, lists, and basic data types by converting non-serializable types to strings.
+    Handles dictionaries, lists, and basic data types by converting non-serializable types to
+        strings.
     """
     if isinstance(data, dict):
         return {key: serialize_metadata(value) for key, value in data.items()}
@@ -17,7 +18,7 @@ def serialize_metadata(data):
     elif isinstance(data, (str, int, float, bool, type(None))):
         return data
     else:
-        return str(data)  # Convert non-serializable types to string
+        return str(data)
 
 @click.option("--nd2-path", type=Path, help="Path to the nd2 file")
 @click.option("--json-path", type=Path, help="Path to output json file")
@@ -33,14 +34,11 @@ def main(nd2_path: str, json_path: str) -> None:
     Returns:
         None
     """
-    # Open the ND2 file and extract metadata
     with nd2.ND2File(nd2_path) as reader:
         metadata = reader.metadata
 
-    # Preprocess the metadata to make it JSON serializable
     serializable_metadata = serialize_metadata(metadata)
 
-    # Write the serializable metadata to a JSON file
     with open(json_path, 'w') as json_file:
         json.dump(serializable_metadata, json_file, indent=4)
 
