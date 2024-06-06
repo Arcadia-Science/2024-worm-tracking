@@ -12,24 +12,32 @@ from skimage import filters, morphology, util
 
 
 @pims.pipeline
-def subtract_bg(img, bg):
-    """Subtract a background from the image.
+def subtract_background(image, background):
+    """
+    Subtract a background from the image. This function re-scales the image data to ensure all pixel
+    values lie between 0 and 1, making the data uniform in scale and often improving the
+    effectiveness of subsequent processing operations like thresholding, segmentation, and feature
+    extraction. This normalization is particularly useful when the input images can have different
+    lighting conditions or contrast levels, ensuring that the processing steps that follow are not
+    biased by these variations.
 
     Args:
-        img (numpy.array or pims.Frame): input image
-        bg (numpy.array or pims.Frame): second image with background
+        image (numpy.array or pims.Frame): input image
+        background (numpy.array or pims.Frame): second image with background
 
     Returns:
         numpy.array: background subtracted image
     """
-    tmp = img - bg
-    mi, ma = np.min(tmp), np.max(tmp)
-    tmp -= mi
-    tmp /= (ma - mi)
+    tmp = image - background
+    minimum, maximum = np.min(tmp), np.max(tmp)
+    # adjusts the pixel values such that the lowest value becomes zero
+    tmp -= minimum
+    # scales the adjusted pixel values to a normalized range between 0 and 1
+    tmp /= (maximum - minimum)
     return util.img_as_float(tmp)
 
 @pims.pipeline
-def preprocess(img, smooth=0, threshold=None, dilate=False):
+def preprocess(image, smooth=0, threshold=None, dilate=False):
     """
     Apply image processing functions to return a binary image.
 
@@ -43,38 +51,45 @@ def preprocess(img, smooth=0, threshold=None, dilate=False):
         numpy.array: binary (masked) image
     """
     if smooth:
-        img = filters.gaussian(img, smooth, preserve_range=True)
+        image = filters.gaussian(image, smooth, preserve_range=True)
     if threshold is None:
-        threshold = filters.threshold_yen(img)
-    mask = img >= threshold
+        threshold = filters.threshold_yen(image)
+    mask = image >= threshold
     for _ in range(dilate):
         mask = morphology.dilation(mask)
     return mask
 
-def calculate_background(frames, bg_window=30):
-    """Calculate the background image using a median stack projection.
+def calculate_background(frames, background_window=30):
+    """
+    Calculate the background image using a median stack projection.
 
     Args:
         frames (numpy.array or pims.ImageSequence): image stack with input images
-        bg_window (int): subsample frames for background creation by selecting bg_window numbers of frames evenly spaced. Defaults to 30.
+        background_window (int): subsample frames for background creation by selecting
+            background_window numbers of frames evenly spaced. Defaults to 30.
 
     Returns:
         numpy.array: background image
     """
-    select_frames = np.linspace(0, len(frames) - 1, bg_window).astype(int)
-    bg = np.median(frames[select_frames], axis=0)
-    return bg
+    select_frames = np.linspace(0, len(frames) - 1, background_window).astype(int)
+    background = np.median(frames[select_frames], axis=0)
+    return background
 
-def process_video(input_file, output_file, bg_window, smooth, apply_threshold):
+def process_video(input_file, output_file, background_window, smooth, apply_threshold):
     frames = io.imread(input_file)
-    bg = calculate_background(frames, bg_window)
-    subtracted_frames = [subtract_bg(frame, bg) for frame in frames]
+    background = calculate_background(frames, background_window)
+    subtracted_frames = [subtract_background(frame, background) for frame in frames]
 
     if smooth:
-        subtracted_frames = [filters.gaussian(frame, smooth, preserve_range=True) for frame in subtracted_frames]
+        subtracted_frames = [
+            filters.gaussian(frame, smooth, preserve_range=True) for frame in subtracted_frames
+        ]
 
     if apply_threshold:
-        thresholded_frames = [preprocess(frame, smooth, threshold=filters.threshold_yen(frame)) for frame in subtracted_frames]
+        thresholded_frames = [
+            preprocess(frame, smooth, threshold=filters.threshold_yen(frame))
+            for frame in subtracted_frames
+        ]
         processed_frames = [util.img_as_ubyte(frame) for frame in thresholded_frames]
     else:
         processed_frames = [util.img_as_ubyte(frame) for frame in subtracted_frames]
@@ -84,14 +99,34 @@ def process_video(input_file, output_file, bg_window, smooth, apply_threshold):
 
 def main():
     parser = argparse.ArgumentParser(description="Background subtraction for worm motility videos.")
-    parser.add_argument("input_file", type=str, help="Path to the input video file (nd2, tiff, or mov).")
-    parser.add_argument("output_file", type=str, help="Path to the output video file.")
-    parser.add_argument("--bg_window", type=int, default=30, help="Number of frames to use for background calculation. Default is 30.")
-    parser.add_argument("--smooth", type=float, default=0, help="Apply Gaussian smoothing with given sigma. Default is 0 (no smoothing).")
-    parser.add_argument("--threshold", action="store_true", help="Apply thresholding using Yen's method. Default is False.")
+    parser.add_argument("input_file", type=str, help="Path to the input video file in mov format.")
+    parser.add_argument(
+        "output_file",
+        type=str,
+        help="Path to the output video file.",
+    )
+    parser.add_argument(
+        "--background_window",
+        type=int,
+        default=30,
+        help="Number of frames to use for background calculation. Default is 30."
+    )
+    parser.add_argument(
+        "--smooth",
+        type=float,
+        default=0,
+        help="Apply Gaussian smoothing with given sigma. Default is 0 (no smoothing).",
+    )
+    parser.add_argument(
+        "--threshold",
+        action="store_true",
+        help="Apply thresholding using Yen's method. Default is False."
+    )
 
     args = parser.parse_args()
-    process_video(args.input_file, args.output_file, args.bg_window, args.smooth, args.threshold)
+    process_video(
+        args.input_file, args.output_file, args.background_window, args.smooth, args.threshold
+    )
 
 if __name__ == "__main__":
     main()
