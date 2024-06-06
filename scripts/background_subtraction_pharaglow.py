@@ -33,8 +33,9 @@ def subtract_background(image, background):
     # adjusts the pixel values such that the lowest value becomes zero
     tmp -= minimum
     # scales the adjusted pixel values to a normalized range between 0 and 1
-    tmp /= (maximum - minimum)
+    tmp /= maximum - minimum
     return util.img_as_float(tmp)
+
 
 @pims.pipeline
 def preprocess(image, smooth=0, threshold=None, dilate=False):
@@ -59,6 +60,7 @@ def preprocess(image, smooth=0, threshold=None, dilate=False):
         mask = morphology.dilation(mask)
     return mask
 
+
 def calculate_background(frames, background_window=30):
     """
     Calculate the background image using a median stack projection.
@@ -74,6 +76,7 @@ def calculate_background(frames, background_window=30):
     select_frames = np.linspace(0, len(frames) - 1, background_window).astype(int)
     background = np.median(frames[select_frames], axis=0)
     return background
+
 
 def process_video(input_file, output_file, background_window, smooth, apply_threshold):
     frames = io.imread(input_file)
@@ -94,8 +97,9 @@ def process_video(input_file, output_file, background_window, smooth, apply_thre
     else:
         processed_frames = [util.img_as_ubyte(frame) for frame in subtracted_frames]
 
-    fps = iio.immeta(input_file)['fps']
+    fps = iio.immeta(input_file)["fps"]
     iio.imwrite(output_file, processed_frames, fps=fps)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Background subtraction for worm motility videos.")
@@ -109,7 +113,7 @@ def main():
         "--background_window",
         type=int,
         default=30,
-        help="Number of frames to use for background calculation. Default is 30."
+        help="Number of frames to use for background calculation. Default is 30.",
     )
     parser.add_argument(
         "--smooth",
@@ -120,13 +124,14 @@ def main():
     parser.add_argument(
         "--threshold",
         action="store_true",
-        help="Apply thresholding using Yen's method. Default is False."
+        help="Apply thresholding using Yen's method. Default is False.",
     )
 
     args = parser.parse_args()
     process_video(
         args.input_file, args.output_file, args.background_window, args.smooth, args.threshold
     )
+
 
 if __name__ == "__main__":
     main()

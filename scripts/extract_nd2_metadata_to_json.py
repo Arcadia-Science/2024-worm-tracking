@@ -20,6 +20,7 @@ def serialize_metadata(data):
     else:
         return str(data)
 
+
 @click.option("--nd2-path", type=Path, help="Path to the nd2 file")
 @click.option("--json-path", type=Path, help="Path to output json file")
 @click.command()
@@ -39,10 +40,11 @@ def main(nd2_path: str, json_path: str) -> None:
 
     serializable_metadata = serialize_metadata(metadata)
 
-    with open(json_path, 'w') as json_file:
+    with open(json_path, "w") as json_file:
         json.dump(serializable_metadata, json_file, indent=4)
 
     print(f"Metadata from {nd2_path} has been written to {json_path}")
+
 
 if __name__ == "__main__":
     main()

@@ -28,13 +28,15 @@ def main(nd2_path: str, mov_path: str) -> None:
 
     # Check metadata for frame rate info, if available
     # TER TODO im not sure this is reading the nd2 metadata correctly, check and update
-    if (hasattr(nd2_dask, 'metadata') and
-        'experiment' in nd2_dask.metadata and
-        'timing' in nd2_dask.metadata['experiment'] and
-        'frame_rate' in nd2_dask.metadata['experiment']['timing']):
-        fps = nd2_dask.metadata['experiment']['timing']['frame_rate']
+    if (
+        hasattr(nd2_dask, "metadata")
+        and "experiment" in nd2_dask.metadata
+        and "timing" in nd2_dask.metadata["experiment"]
+        and "frame_rate" in nd2_dask.metadata["experiment"]["timing"]
+    ):
+        fps = nd2_dask.metadata["experiment"]["timing"]["frame_rate"]
 
-    writer = imageio.get_writer(str(mov_path), fps=fps, quality=7, format='FFMPEG')
+    writer = imageio.get_writer(str(mov_path), fps=fps, quality=7, format="FFMPEG")
 
     num_frames = nd2_dask.shape[0]
 
@@ -52,6 +54,7 @@ def main(nd2_path: str, mov_path: str) -> None:
             print(f"Skipped frame {frame_idx} due to incorrect dimensions.")
 
     writer.close()
+
 
 if __name__ == "__main__":
     main()
