@@ -1,3 +1,5 @@
+processed-data/
+
 # packages installed in editable mode
 envs/src/**
 
