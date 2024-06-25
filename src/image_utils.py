@@ -12,24 +12,28 @@ def autoscale(im, percentile=100, dtype=None):
 
     vmin, vmax = np.percentile(im, [100 - percentile, percentile])
     return skimage.exposure.rescale_intensity(
-        im, in_range=(vmin, vmax), out_range=dtype if dtype is not None else (0, 1)
+        im, in_range=(vmin, vmax), out_range=(dtype if dtype is not None else (0, 1))
     )
 
 
-def imshow(*ims, figsize=(12, 12)):
+def imshow(*ims, figsize=(12, 12), title=None):
     """
     Convenience function to visualize one or more images side-by-side.
     """
     plt.figure(figsize=figsize)
     ims = [autoscale(im) for im in ims]
     plt.imshow(np.concatenate(ims, axis=1), cmap="gray")
+
+    if title is not None:
+        plt.title(title)
     plt.axis("off")
     plt.show()
 
 
 def cleanup_mask(mask):
     """
-    Basic mask cleanup: remove small objects and perform a closing operation to fill in holes.
+    "Clean" a binary mask by removing small objects and using a closing operation to fill in holes.
+    The parameters for these operations were manually selected and are hard-coded for now.
     """
     mask = skimage.morphology.isotropic_closing(mask, radius=5)
     mask = skimage.morphology.remove_small_objects(mask, min_size=100)
@@ -38,7 +42,7 @@ def cleanup_mask(mask):
 
 def tile_image(im, num_timepoints=20, subsample_xy_by=2):
     """
-    Tile a single 3D image (timepoints, x, y) into a 2D image (x, timepoints * y).
+    Tile a single 3D image of shape (timepoints, x, y) into a 2D image of shape (x, timepoints * y).
     """
     # Subsample to reduce the size of the concatenated image.
     subsample_timepoints_by = max(1, im.shape[0] // num_timepoints)
