@@ -1,16 +1,14 @@
-import os
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 import click
 import imageio
 import nd2
-import numpy as np
-from tqdm import tqdm
-import zarr
-import tifffile
 import numcodecs
-
+import numpy as np
+import tifffile
+import zarr
+from tqdm import tqdm
 
 XY_DOWNSAMPLE_FACTOR = 2
 T_DOWNSAMPLE_FACTOR = 2
@@ -57,7 +55,8 @@ def _convert_file(nd2_path: Path, output_path: Path) -> None:
         tifffile.imwrite(output_path, raw_image)
 
     elif file_format == "zarr":
-        # Zarr "files" are actually directories.
+        # Zarr "files" are actually directories, so we need to delete the existing directory
+        # and create a new one before saving the zarr array.
         shutil.rmtree(output_path, ignore_errors=True)
         output_path.mkdir(exist_ok=True, parents=True)
 
@@ -65,6 +64,8 @@ def _convert_file(nd2_path: Path, output_path: Path) -> None:
         zarr_array = zarr.array(
             raw_image,
             compressor=zarr.Blosc(cname="zstd", clevel=3, shuffle=numcodecs.Blosc.BITSHUFFLE),
+            # We use a chunksize that spans multiple frames in an attempt to optimize
+            # the compression ratio (since adjacent frames are highly correlated).
             chunks=(10, xy_size, xy_size),
         )
         click.echo(zarr_array.info)
