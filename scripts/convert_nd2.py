@@ -40,7 +40,6 @@ def _convert_file(nd2_path: Path, output_path: Path) -> None:
     ]
 
     file_format = output_path.suffix[1:].lower()
-
     if file_format == "mov":
         # We use an arbitrary FPS of 10 that is suitable for visual inspection.
         with imageio.get_writer(str(output_path), fps=10, quality=7, format="FFMPEG") as writer:
@@ -100,6 +99,10 @@ def convert_dir(input_dirpath: Path, output_dirpath: Path, file_format: str) -> 
                     / dirpath.relative_to(input_dirpath)
                     / nd2_filepath.with_suffix(f".{file_format}").name
                 )
+                if output_filepath.exists():
+                    click.echo(f"File {output_filepath} already exists and will be skipped")
+                    continue
+
                 output_filepath.parent.mkdir(exist_ok=True, parents=True)
                 _convert_file(nd2_filepath, output_filepath)
 
