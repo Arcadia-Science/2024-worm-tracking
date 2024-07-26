@@ -56,7 +56,7 @@ def dog_filter_dir(input_dirpath: Path, output_dirpath: Path):
     """
     Applies a DoG filter to all TIFF files in a directory, preserving original TIFF files and
     directory structure.
-        
+ 
     input_dirpath: Path to the input directory containing TIFF files and/or subdirectories
         containing TIFF files.
     output_dirpath: Path to the output directory in which the DoG filtered files will be saved

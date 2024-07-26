@@ -43,7 +43,7 @@ def remove_artifacts(frame, min_area=7000, eccentricity_thresh=0.75):
     - frame: input image frame as a 2D numpy array.
     - min_area: minimum area of objects to keep.
     - eccentricity_thresh: maximum eccentricity to filter out circular shapes.
-    
+ 
     Returns:
     - cleaned_frame: frame after removing small circular artifacts.
     """
@@ -93,7 +93,7 @@ def apply_background_mask(image_stack):
         # It also keeps the outline of the worm.
         # I think Tierpsy tracker uses the outline to determine head/tail, so this is important to
         # keep.
-        inverted_mask = np.logical_not(dilated_mask)
+        inverted_mask = np.logical_not(cleaned_mask)
         max_intensity = np.max(frame)  # Maximum intensity based on the image type
         subtracted_image = frame.copy()
         subtracted_image[inverted_mask] = max_intensity
@@ -137,7 +137,7 @@ def background_mask_dir(input_dirpath: Path, output_dirpath: Path):
     """
     Applies a background masking to all TIFF files in a directory,
     preserving original TIFF files and directory structure.
-        
+
     input_dirpath: Path to the input directory containing TIFF files and/or subdirectories
         containing TIFF files.
     output_dirpath: Path to the output directory in which the DoG filtered files will be saved
