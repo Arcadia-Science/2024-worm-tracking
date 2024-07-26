@@ -10,8 +10,8 @@ import tifffile
 import zarr
 from tqdm import tqdm
 
-XY_DOWNSAMPLE_FACTOR = 2
-T_DOWNSAMPLE_FACTOR = 2
+XY_DOWNSAMPLE_FACTOR = 1
+T_DOWNSAMPLE_FACTOR = 1
 
 
 @click.group()
