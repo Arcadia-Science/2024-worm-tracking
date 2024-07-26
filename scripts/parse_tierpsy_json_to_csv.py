@@ -1,11 +1,13 @@
-import click
 import json
-import pandas as pd
 import os
+
+import click
+import pandas as pd
+
 
 def read_json(file_path):
     """Read a JSON file and return the data."""
-    with open(file_path, 'r') as file:
+    with open(file_path) as file:
         data = json.load(file)
     return data
 

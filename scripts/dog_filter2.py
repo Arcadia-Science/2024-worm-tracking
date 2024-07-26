@@ -1,12 +1,13 @@
-import sys
+from pathlib import Path
+
+import click
 import numpy as np
-import skimage.filters
 import skimage.exposure
+import skimage.filters
 import skimage.util
 import tifffile
 from tqdm import tqdm
-from pathlib import Path
-import click
+
 
 def apply_dog_filter(image_stack):
     """

@@ -1,11 +1,10 @@
-import sys
+from pathlib import Path
+
+import click
 import numpy as np
 import skimage
 import tifffile
 from tqdm import tqdm
-from pathlib import Path
-import click
-
 
 DILATION_FACTOR = 30
 
@@ -59,14 +58,14 @@ def remove_artifacts(frame, min_area=7000, eccentricity_thresh=0.75):
 
     # Generate cleaned frame by keeping only the regions that meet criteria
     cleaned_frame = skimage.morphology.remove_small_objects(labeled_frame, min_size=min_area)
-    return cleaned_frame 
+    return cleaned_frame
 
 
 def apply_background_mask(image_stack):
     """
     Applies background masking to each frame of the image stack and scales the output.
     """
-    
+
     _, estimated_background_mask = make_background_mask_from_standard_deviation(image_stack, ind=None)
     masked_stack = []
     for frame in tqdm(image_stack):

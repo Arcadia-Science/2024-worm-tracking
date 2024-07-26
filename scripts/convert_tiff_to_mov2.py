@@ -1,9 +1,11 @@
 import os
+from pathlib import Path
+
 import click
 import imageio
-from pathlib import Path
 import tifffile as tiff
 from tqdm import tqdm
+
 
 @click.group()
 def cli():
