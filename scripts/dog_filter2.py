@@ -11,12 +11,15 @@ from tqdm import tqdm
 
 def apply_dog_filter(image_stack):
     """
-    Applies the Difference of Gaussian (DoG) filter to each frame of the image stack and scales the output.
+    Applies the Difference of Gaussian (DoG) filter to each frame of the image stack and scales the
+    output.
     """
     filtered_stack = []
     for frame in tqdm(image_stack):
         dog_filtered = skimage.filters.difference_of_gaussians(frame, low_sigma=0.3, high_sigma=3)
-        dog_filtered = skimage.exposure.rescale_intensity(dog_filtered, in_range='image', out_range=(0, 1))
+        dog_filtered = skimage.exposure.rescale_intensity(
+            dog_filtered, in_range='image', out_range=(0, 1)
+        )
         dog_filtered = skimage.util.img_as_ubyte(dog_filtered)
         filtered_stack.append(dog_filtered)
     return np.stack(filtered_stack)
@@ -46,11 +49,13 @@ def dog_filter_file(tiff_path: Path, output_path: Path):
     process_image(tiff_path, output_path)
 
 @click.option("--input-dirpath", type=Path, help="Path to the input directory of TIFF files")
-@click.option("--output-dirpath", type=Path, help="Path to the output directory for processed TIFF files")
+@click.option("--output-dirpath", type=Path,
+              help="Path to the output directory for processed TIFF files")
 @cli.command()
 def dog_filter_dir(input_dirpath: Path, output_dirpath: Path):
     """
-    Applies a DoG filter to all TIFF files in a directory, preserving original TIFF files and directory structure.
+    Applies a DoG filter to all TIFF files in a directory, preserving original TIFF files and
+    directory structure.
         
     input_dirpath: Path to the input directory containing TIFF files and/or subdirectories
         containing TIFF files.

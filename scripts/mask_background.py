@@ -34,7 +34,8 @@ def remove_artifacts(frame, min_area=7000, eccentricity_thresh=0.75):
     """
     Remove small circular artifacts from the image.
     These artifacts exist from discolorations/streaks in the background after initial masking.
-    Most of these artifacts end up being circular because of the dilation factor that pads the region of interst.
+    Most of these artifacts end up being circular because of the dilation factor that pads the
+    region of interst.
     The regions are small, so the padding ends up being circular.
     We take advantage of these two properties to try and filter this noise out.
 
@@ -66,12 +67,13 @@ def apply_background_mask(image_stack):
     Applies background masking to each frame of the image stack and scales the output.
     """
 
-    _, estimated_background_mask = make_background_mask_from_standard_deviation(image_stack, ind=None)
+    _, estimated_background_mask = make_background_mask_from_standard_deviation(
+        image_stack, ind=None
+    )
     masked_stack = []
     for frame in tqdm(image_stack):
         dog_filtered = skimage.filters.difference_of_gaussians(frame, low_sigma=1, high_sigma=3)
         # A built-in skimage filter to find edges seems to work the best.
-        # Reference: https://scikit-image.org/docs/stable/auto_examples/edges/plot_ridge_filter.html#ridge-operators.
         edges = skimage.filters.sato(dog_filtered, sigmas=[0.3, 1], black_ridges=True)
 
         # Find a threshold for the edges using Otsu's method and the estimated background mask.
@@ -89,13 +91,16 @@ def apply_background_mask(image_stack):
         # Set masked areas to white in the original frame.
         # This should work well with Tierpsy tracker expecting a light background.
         # It also keeps the outline of the worm.
-        # I think Tierpsy tracker users the outline to determine head/tail, so this important to keep.
+        # I think Tierpsy tracker uses the outline to determine head/tail, so this is important to
+        # keep.
         inverted_mask = np.logical_not(dilated_mask)
         max_intensity = np.max(frame)  # Maximum intensity based on the image type
         subtracted_image = frame.copy()
         subtracted_image[inverted_mask] = max_intensity
 
-        subtracted_image = skimage.exposure.rescale_intensity(subtracted_image, in_range='image', out_range=(0, 1))
+        subtracted_image = skimage.exposure.rescale_intensity(
+            subtracted_image, in_range='image', out_range=(0, 1)
+        )
         subtracted_image = skimage.util.img_as_ubyte(subtracted_image)
         masked_stack.append(subtracted_image)
     return np.stack(masked_stack)
@@ -125,7 +130,8 @@ def background_mask_file(tiff_path: Path, output_path: Path):
     process_image(tiff_path, output_path)
 
 @click.option("--input-dirpath", type=Path, help="Path to the input directory of TIFF files")
-@click.option("--output-dirpath", type=Path, help="Path to the output directory for processed TIFF files")
+@click.option("--output-dirpath", type=Path,
+              help="Path to the output directory for processed TIFF files")
 @cli.command()
 def background_mask_dir(input_dirpath: Path, output_dirpath: Path):
     """

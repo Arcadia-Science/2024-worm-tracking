@@ -36,9 +36,11 @@ def convert_file(tiff_path: Path, mov_path: Path) -> None:
     mov_path.parent.mkdir(parents=True, exist_ok=True)
     _convert_file(tiff_path, mov_path)
 
-@click.option("--input-dirpath", type=Path, help="Path to the input directory containing TIFF files")
+@click.option("--input-dirpath", type=Path,
+              help="Path to the input directory containing TIFF files")
 @click.option("--output-dirpath", type=Path, help="Path to the output directory for MOV files")
-@click.option("--filter-string", default="dogfilter", help="Filter string to select files for conversion")
+@click.option("--filter-string", default="dogfilter",
+              help="Filter string to select files for conversion")
 @cli.command()
 def convert_dir(input_dirpath: Path, output_dirpath: Path, filter_string: str) -> None:
     """
