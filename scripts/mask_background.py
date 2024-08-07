@@ -43,7 +43,7 @@ def remove_artifacts(frame, min_area=7000, eccentricity_thresh=0.75):
     - frame: input image frame as a 2D numpy array.
     - min_area: minimum area of objects to keep.
     - eccentricity_thresh: maximum eccentricity to filter out circular shapes.
- 
+
     Returns:
     - cleaned_frame: frame after removing small circular artifacts.
     """

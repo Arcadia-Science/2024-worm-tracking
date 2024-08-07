@@ -23,7 +23,8 @@ def extract_data_from_directory(directory):
     return data
 
 @click.command()
-@click.option('--directory', type=click.Path(exists=True), prompt=True, help='Directory containing JSON files.')
+@click.option('--directory', type=click.Path(exists=True), prompt=True,
+              help='Directory containing JSON files.')
 @click.option('--output', type=click.Path(), default='output.csv', help='Output CSV file path.')
 def main(directory, output):
     """Process JSON files in the specified directory and output to a CSV file."""
