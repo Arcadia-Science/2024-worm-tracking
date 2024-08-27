@@ -1,11 +1,9 @@
 import os
-from pathlib import Path
-
-import click
 import imageio
 import tifffile as tiff
 from tqdm import tqdm
-
+from pathlib import Path
+import click
 
 @click.group()
 def cli():
@@ -16,17 +14,17 @@ def _convert_file(tiff_path: Path, mov_path: Path) -> None:
     Convert a single TIFF file to MOV format using imageio with FFMPEG.
     """
     tiff_stack = tiff.imread(tiff_path)
-
+    
     # Ensure that all frames have the same dimensions
     height, width = tiff_stack[0].shape
-
+    
     # Open the writer using imageio-ffmpeg
     with imageio.get_writer(str(mov_path), fps=24.5, codec='libx264', quality=8, format='FFMPEG') as writer:
         for frame in tqdm(tiff_stack, desc="Writing frames to video"):
             # Normalize frame to the 8-bit grayscale range (0-255) if needed
             if frame.dtype != 'uint8':
                 frame = cv2.normalize(frame, None, 0, 255, cv2.NORM_MINMAX).astype('uint8')
-
+            
             # Write frame to video
             writer.append_data(frame)
 
