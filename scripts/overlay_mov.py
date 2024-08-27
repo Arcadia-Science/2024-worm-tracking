@@ -7,8 +7,8 @@ import numpy as np
 
 
 @click.command()
-@click.option('--mov-path', type=click.Path(exists=True), required=True, help='Path to the input MOV file.')
-@click.option('--output-path', type=click.Path(), required=True, help='Path to save the output PNG image.')
+@click.option('--mov-path', type=click.Path(exists=True), required=True, help='Path to MOV file.')
+@click.option('--output-path', type=click.Path(), required=True, help='Path to output PNG file.')
 
 def overlay_mov(mov_path, output_path):
     """
