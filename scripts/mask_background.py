@@ -6,7 +6,7 @@ import skimage
 import tifffile
 from tqdm import tqdm
 
-DILATION_FACTOR = 30
+DILATION_FACTOR = 40
 
 
 
@@ -30,7 +30,7 @@ def make_background_mask_from_standard_deviation(image_stack, ind=None):
     return std, mask
 
 
-def remove_artifacts(frame, min_area=7000, eccentricity_thresh=0.75):
+def remove_artifacts(frame, min_area=15000, eccentricity_thresh=0.25):
     """
     Remove small circular artifacts from the image.
     These artifacts exist from discolorations/streaks in the background after initial masking.
