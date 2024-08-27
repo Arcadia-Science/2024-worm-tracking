@@ -1,5 +1,6 @@
 processed-data/
 tmp/
+.Rhistory
 
 # packages installed in editable mode
 envs/src/**
