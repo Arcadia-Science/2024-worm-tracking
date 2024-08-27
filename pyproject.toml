@@ -58,5 +58,5 @@ no-lines-before = ["future", "standard-library"]
 [tool.snakefmt]
 # the line length here should match the one used by ruff
 line_length = 100
-include = 'Snakefile|Snakefile_*|*.snakefile'
+include = 'Snakefile|Snakefile_*|\.snakefile$'
 exclude = 'dev'
