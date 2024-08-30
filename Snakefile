@@ -116,7 +116,6 @@ rule all:
 
 # future rules:
 # rule run_tierpsy_tracker:
-
 # rule compare_tierpsy_tracker_mask_to_input:
 # rule summarize_tierpsy_tracker_run:
 # """
