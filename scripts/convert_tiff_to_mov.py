@@ -12,6 +12,7 @@ from tqdm import tqdm
 def cli():
     pass
 
+
 def _convert_file(tiff_path: Path, mov_path: Path) -> None:
     """
     Convert a single TIFF file to MOV format using imageio with FFMPEG.
@@ -21,15 +22,16 @@ def _convert_file(tiff_path: Path, mov_path: Path) -> None:
     height, width = tiff_stack[0].shape
 
     with imageio.get_writer(
-        str(mov_path), fps=24.5, codec='libx264', quality=8, format='FFMPEG'
+        str(mov_path), fps=24.5, codec="libx264", quality=8, format="FFMPEG"
     ) as writer:
         for frame in tqdm(tiff_stack, desc="Writing frames to video"):
-            if frame.dtype != 'uint8':
-                frame = cv2.normalize(frame, None, 0, 255, cv2.NORM_MINMAX).astype('uint8')
+            if frame.dtype != "uint8":
+                frame = cv2.normalize(frame, None, 0, 255, cv2.NORM_MINMAX).astype("uint8")
 
             writer.append_data(frame)
 
     click.echo(f"Converted {tiff_path} to {mov_path}.")
+
 
 @click.option("--tiff-path", type=Path, help="Path to the input TIFF file")
 @click.option("--mov-path", type=Path, help="Path to output MOV file")
@@ -44,11 +46,14 @@ def convert_file(tiff_path: Path, mov_path: Path) -> None:
     mov_path.parent.mkdir(parents=True, exist_ok=True)
     _convert_file(tiff_path, mov_path)
 
-@click.option("--input-dirpath", type=Path,
-              help="Path to the input directory containing TIFF files")
+
+@click.option(
+    "--input-dirpath", type=Path, help="Path to the input directory containing TIFF files"
+)
 @click.option("--output-dirpath", type=Path, help="Path to the output directory for MOV files")
-@click.option("--filter-string", default="dogfilter",
-              help="Filter string to select files for conversion")
+@click.option(
+    "--filter-string", default="dogfilter", help="Filter string to select files for conversion"
+)
 @cli.command()
 def convert_dir(input_dirpath: Path, output_dirpath: Path, filter_string: str) -> None:
     """
@@ -61,13 +66,14 @@ def convert_dir(input_dirpath: Path, output_dirpath: Path, filter_string: str) -
             if filename.endswith(".tiff") and filter_string in filename:
                 tiff_path = dirpath / filename
                 relative_path = tiff_path.relative_to(input_dirpath)
-                mov_path = output_dirpath / relative_path.with_suffix('.mov')
+                mov_path = output_dirpath / relative_path.with_suffix(".mov")
                 if mov_path.exists():
                     click.echo(f"File {mov_path} already exists and will be skipped")
                     continue
 
                 mov_path.parent.mkdir(parents=True, exist_ok=True)
                 _convert_file(tiff_path, mov_path)
+
 
 if __name__ == "__main__":
     cli()

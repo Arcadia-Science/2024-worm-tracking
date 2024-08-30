@@ -18,11 +18,12 @@ def apply_dog_filter(image_stack):
     for frame in tqdm(image_stack):
         dog_filtered = skimage.filters.difference_of_gaussians(frame, low_sigma=0.3, high_sigma=3)
         dog_filtered = skimage.exposure.rescale_intensity(
-            dog_filtered, in_range='image', out_range=(0, 1)
+            dog_filtered, in_range="image", out_range=(0, 1)
         )
         dog_filtered = skimage.util.img_as_ubyte(dog_filtered)
         filtered_stack.append(dog_filtered)
     return np.stack(filtered_stack)
+
 
 def process_image(tiff_path: Path, output_path: Path):
     """
@@ -31,12 +32,14 @@ def process_image(tiff_path: Path, output_path: Path):
     image_stack = tifffile.imread(str(tiff_path))
     print("Loaded image stack with shape:", image_stack.shape)
     filtered_stack = apply_dog_filter(image_stack)
-    tifffile.imwrite(str(output_path), filtered_stack, photometric='minisblack')
+    tifffile.imwrite(str(output_path), filtered_stack, photometric="minisblack")
     print(f"Processed TIFF stack saved to {output_path}")
+
 
 @click.group()
 def cli():
     pass
+
 
 @click.option("--tiff-path", type=Path, help="Path to the input TIFF file")
 @click.option("--output-path", type=Path, help="Path to output dog-filtered TIFF file")
@@ -48,9 +51,11 @@ def dog_filter_file(tiff_path: Path, output_path: Path):
     """
     process_image(tiff_path, output_path)
 
+
 @click.option("--input-dirpath", type=Path, help="Path to the input directory of TIFF files")
-@click.option("--output-dirpath", type=Path,
-              help="Path to the output directory for processed TIFF files")
+@click.option(
+    "--output-dirpath", type=Path, help="Path to the output directory for processed TIFF files"
+)
 @cli.command()
 def dog_filter_dir(input_dirpath: Path, output_dirpath: Path):
     """
@@ -68,9 +73,7 @@ def dog_filter_dir(input_dirpath: Path, output_dirpath: Path):
                 tiff_filepath = dirpath / filename
                 dog_filter_filename = filename.replace(".tiff", "_dogfilter.tiff")
                 output_filepath = (
-                    output_dirpath
-                    / dirpath.relative_to(input_dirpath)
-                    / dog_filter_filename
+                    output_dirpath / dirpath.relative_to(input_dirpath) / dog_filter_filename
                 )
                 if output_filepath.exists():
                     click.echo(f"File {output_filepath} already exists and will be skipped")
