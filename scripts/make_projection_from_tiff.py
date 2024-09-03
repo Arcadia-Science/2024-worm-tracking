@@ -16,19 +16,15 @@ def make_projection_from_tiff(tiff_path, output_path):
     """
     tiff_file_path = pathlib.Path(tiff_path).absolute()
 
-    # Read the TIFF file
     images = tifffile.imread(str(tiff_file_path))
 
-    if images.ndim == 2:  # Single frame in TIFF
+    if images.ndim == 2:
         images = images[np.newaxis, ...]
 
-    # Create min-intensity projection across all frames
     min_proj = np.min(images, axis=0)
 
-    # Scale the image to uint8
     scaled_image = skimage.util.img_as_ubyte(min_proj)
 
-    # Save the output image
     output_file_path = pathlib.Path(output_path).absolute()
     plt.imsave(output_file_path, scaled_image, cmap="gray")
 
