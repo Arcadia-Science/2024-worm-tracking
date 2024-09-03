@@ -8,6 +8,11 @@ import skimage.util
 import tifffile
 from tqdm import tqdm
 
+# Sigma values for difference of gaussian filter.
+# We selected these values by empirically testing them on test images of worms taken on our
+# experimental setup.
+LOW_SIGMA = 0.3
+HIGH_SIGMA = 3
 
 def apply_dog_filter(image_stack):
     """
@@ -16,7 +21,9 @@ def apply_dog_filter(image_stack):
     """
     filtered_stack = []
     for frame in tqdm(image_stack):
-        dog_filtered = skimage.filters.difference_of_gaussians(frame, low_sigma=0.3, high_sigma=3)
+        dog_filtered = skimage.filters.difference_of_gaussians(
+            frame, low_sigma=LOW_SIGMA, high_sigma=HIGH_SIGMA
+        )
         dog_filtered = skimage.exposure.rescale_intensity(
             dog_filtered, in_range="image", out_range=(0, 1)
         )

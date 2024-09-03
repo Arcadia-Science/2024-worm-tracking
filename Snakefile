@@ -33,6 +33,9 @@ def find_input_files(input_dirpath, input_prefix_to_remove):
             relative_path = filepath_root.relative_to(input_prefix_to_remove)
             filepaths.append(relative_path)
         except ValueError:
+            logging.warning(
+                f"'{input_prefix_to_remove}' not in path '{filepath_root}'. Path not modified."
+            )
             filepaths.append(filepath_root)
     return filepaths
 
@@ -59,9 +62,9 @@ rule convert_nd2_to_tiff:
 
 rule difference_of_gaussians_filter:
     input:
-        rules.convert_nd2_to_tiff.output.tiff,
+        tiff=rules.convert_nd2_to_tiff.output.tiff,
     output:
-        dog=OUTPUT_DIRPATH / "dogfilter_tiff" / "{filepath}.tiff",
+        tiff=OUTPUT_DIRPATH / "dogfilter_tiff" / "{filepath}.tiff",
     conda:
         "envs/dev.yml"
     shell:
@@ -73,7 +76,7 @@ rule difference_of_gaussians_filter:
 
 rule convert_tiff_to_mov:
     input:
-        tiff=rules.difference_of_gaussians_filter.output.dog,
+        tiff=rules.difference_of_gaussians_filter.output.tiff,
     output:
         mov=OUTPUT_DIRPATH / "dogfilter_mov" / "{filepath}.mov",
     conda:
@@ -90,9 +93,9 @@ rule convert_tiff_to_mov:
 ########################################################
 
 
-rule overlay_mov:
+rule make_projection_from_mov:
     """
-    Overlays each frame of the MOV into a single PNG.
+    Projects each frame of the FOV acquisition into a single PNG.
     This allows the user to see the full path of all worms in the video by looking at a single PNG.
     This PNG can be used to visually count the number of worms in an field of view and to get a 
     sense of how quickly the worms were moving (given that the image acquisitions are standardized
@@ -101,12 +104,12 @@ rule overlay_mov:
     input:
         mov=rules.convert_tiff_to_mov.output.mov,
     output:
-        png=OUTPUT_DIRPATH / "dogfilter_mov_overlay" / "{filepath}.png",
+        png=OUTPUT_DIRPATH / "dogfilter_projection" / "{filepath}.png",
     conda:
         "envs/dev.yml"
     shell:
         """
-        python scripts/overlay_mov.py --mov-path {input.mov} --output-path {output.png}
+        python scripts/make_projection_from_mov.py --mov-path {input.mov} --output-path {output.png}
         """
 
 

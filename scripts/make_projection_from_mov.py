@@ -4,12 +4,13 @@ import click
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+import skimage
 
 
 @click.command()
 @click.option("--mov-path", type=click.Path(exists=True), required=True, help="Path to MOV file.")
 @click.option("--output-path", type=click.Path(), required=True, help="Path to output PNG file.")
-def overlay_mov(mov_path, output_path):
+def make_projection_from_mov(mov_path, output_path):
     """
     Overlay all frames in a MOV file and save the resulting image as a PNG.
     """
@@ -36,13 +37,13 @@ def overlay_mov(mov_path, output_path):
     # Create min-intensity projection across all frames
     min_proj = np.min(frames, axis=0)
 
-    scaled_image = cv2.normalize(min_proj, None, 0, 255, cv2.NORM_MINMAX)
+    scaled_image = skimage.util.img_as_ubyte(min_proj)
 
     output_file_path = pathlib.Path(output_path).absolute()
     plt.imsave(output_file_path, scaled_image, cmap="gray")
 
-    print(f"Overlay image saved as {output_file_path}")
+    click.echo(f"Overlay image saved as {output_file_path}")
 
 
 if __name__ == "__main__":
-    overlay_mov()
+    make_projection_from_mov()

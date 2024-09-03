@@ -7,9 +7,9 @@ from PIL import Image
 
 
 def load_hdf5_frame(hdf5_file_path, dataset_name, frame_index):
-    with h5py.File(hdf5_file_path, "r") as f:
-        if dataset_name in f:
-            mask_data = f[dataset_name][frame_index]
+    with h5py.File(hdf5_file_path, "r") as file:
+        if dataset_name in file:
+            mask_data = file[dataset_name][frame_index]
         else:
             print(f"Dataset {dataset_name} not found in the file.")
             return None
