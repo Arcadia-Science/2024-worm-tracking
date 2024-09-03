@@ -14,6 +14,7 @@ from tqdm import tqdm
 LOW_SIGMA = 0.3
 HIGH_SIGMA = 3
 
+
 def apply_dog_filter(image_stack):
     """
     Applies the Difference of Gaussian (DoG) filter to each frame of the image stack and scales the
