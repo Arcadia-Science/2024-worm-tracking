@@ -93,7 +93,7 @@ rule convert_tiff_to_mov:
 ########################################################
 
 
-rule make_projection_from_mov:
+rule make_projection_from_tiff:
     """
     Projects each frame of the FOV acquisition into a single PNG.
     This allows the user to see the full path of all worms in the video by looking at a single PNG.
@@ -102,14 +102,14 @@ rule make_projection_from_mov:
     to a consistent frame rate and time).
     """
     input:
-        mov=rules.convert_tiff_to_mov.output.mov,
+        tiff=rules.difference_of_gaussians_filter.output.tiff,
     output:
         png=OUTPUT_DIRPATH / "dogfilter_projection" / "{filepath}.png",
     conda:
         "envs/dev.yml"
     shell:
         """
-        python scripts/make_projection_from_mov.py --mov-path {input.mov} --output-path {output.png}
+        python scripts/make_projection_from_tiff.py --tiff-path {input.tiff} --output-path {output.png}
         """
 
 
