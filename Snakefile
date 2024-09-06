@@ -51,7 +51,7 @@ rule convert_nd2_to_tiff:
     input:
         nd2=INPUT_PREFIX + "/{filepath}.nd2",
     output:
-        tiff=OUTPUT_DIRPATH / "raw_tiff" / "{filepath}.tiff",
+        tiff=temp(OUTPUT_DIRPATH / "raw_tiff" / "{filepath}.tiff"),
     conda:
         "envs/dev.yml"
     shell:
@@ -70,7 +70,7 @@ rule difference_of_gaussians_filter:
     shell:
         """
         python scripts/dog_filter.py dog-filter-file \
-            --tiff-path {input.tiff} --output-path {output.dog}
+            --tiff-path {input.tiff} --output-path {output.tiff}
         """
 
 
@@ -115,7 +115,9 @@ rule make_projection_from_tiff:
 
 rule all:
     default_target: True
-
+    input:
+        expand(rules.make_projection_from_tiff.output.png, filepath = FILEPATHS),
+        expand(rules.convert_tiff_to_mov.output.mov, filepath = FILEPATHS)
 
 # future rules:
 # rule run_tierpsy_tracker:
