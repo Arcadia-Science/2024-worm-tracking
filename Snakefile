@@ -44,6 +44,7 @@ INPUT_PREFIX = config["input_prefix"]  # prefix of input_dirpath to remove from 
 FILEPATHS = find_input_files(
     input_dirpath=config["input_dirpath"], input_prefix_to_remove=INPUT_PREFIX
 )
+CONFIG_FILEPATH = "conf/dogfilter-no-op50-chunks.json"
 OUTPUT_DIRPATH = Path(config["output_dirpath"])
 
 
@@ -87,6 +88,39 @@ rule convert_tiff_to_mov:
             --tiff-path {input.tiff} --mov-path {output.mov}
         """
 
+rule run_tierpsy_tracker:
+    """
+    This rule executes the Tierpsy tracker worm motility analysis.
+    The recommended way to install and use Tierpsy tracker is in Docker container that runs a GUI.
+    However, this approach is difficult to automate.
+    We changed the Docker container and launch script so that it runs in the background without
+    using the GUI.
+    We then send commands to the Docker container from this snakemake rule.
+    See the README in this repository for more details on this approach.
+    """
+    input:
+       mov=expand(rules.convert_tiff_to_mov.output.mov, filepath = FILEPATHS),
+       config=CONFIG_FILEPATH
+    output: hdf5 = OUTPUT_DIRPATH / "tierpsy_out" / "results" / "{filepath}_featuresN.hdf5"
+    params:
+        input_dir = OUTPUT_DIRPATH / "dogfilter_mov"
+        mask_dir = OUTPUT_DIRPATH / "tierpsy_out" / "masks",
+        results_dir = OUTPUT_DIRPATH / "tierpsy_out" / "results"
+    shell:
+        """
+        docker exec -u root \
+            -e SHELL=/bin/bash \
+            -e HOME=/home/tierpsy_user \
+            -e PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/tierpsy_user/.local/bin \
+            -e TERM=xterm \
+            -e PWD=/DATA \
+            -e SHLVL=1 \
+            -e LIBGL_ALWAYS_INDIRECT=1 \
+            -e DOCKER_HOME=/home/tierpsy_user \
+            -e _=/usr/bin/env \
+            my_tierpsy_container \
+            /bin/bash -c "umask 000; tierpsy_process --video_dir_root local_drive/{params.input_dir} --json_file local_drive/{input.config} --mask_dir_root local_drive/{params.mask_dir} --pattern_include *.mov --results_dir_root local_drive/{params.results_dir}"
+        """
 
 ########################################################
 ## Quality control
@@ -117,10 +151,8 @@ rule all:
     default_target: True
     input:
         expand(rules.make_projection_from_tiff.output.png, filepath = FILEPATHS),
-        expand(rules.convert_tiff_to_mov.output.mov, filepath = FILEPATHS)
+        expand(rules.run_tierpsy_tracker.output.hdf5, filepath = FILEPATHS),
 
-# future rules:
-# rule run_tierpsy_tracker:
 # rule compare_tierpsy_tracker_mask_to_input:
 # rule summarize_tierpsy_tracker_run:
 # """
