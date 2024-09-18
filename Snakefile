@@ -47,6 +47,7 @@ FILEPATHS = find_input_files(
 OUTPUT_DIRPATH = Path(config["output_dirpath"])
 CONFIG_FILEPATH = "conf/dogfilter-no-op50-chunks.json"
 
+
 rule convert_nd2_to_tiff:
     input:
         nd2=INPUT_PREFIX + "/{filepath}.nd2",
@@ -87,6 +88,7 @@ rule convert_tiff_to_mov:
             --tiff-path {input.tiff} --mov-path {output.mov}
         """
 
+
 rule run_tierpsy_tracker:
     """
     This rule executes the Tierpsy tracker worm motility analysis.
@@ -98,13 +100,14 @@ rule run_tierpsy_tracker:
     See the README in this repository for more details on this approach.
     """
     input:
-       mov=expand(rules.convert_tiff_to_mov.output.mov, filepath = FILEPATHS),
-       config=CONFIG_FILEPATH
-    output: hdf5 = OUTPUT_DIRPATH / "tierpsy_out" / "results" / "{filepath}_featuresN.hdf5"
+        mov=expand(rules.convert_tiff_to_mov.output.mov, filepath=FILEPATHS),
+        config=CONFIG_FILEPATH,
+    output:
+        hdf5=OUTPUT_DIRPATH / "tierpsy_out" / "results" / "{filepath}_featuresN.hdf5",
     params:
-        input_dir = OUTPUT_DIRPATH / "dogfilter_mov"
-        mask_dir = OUTPUT_DIRPATH / "tierpsy_out" / "masks",
-        results_dir = OUTPUT_DIRPATH / "tierpsy_out" / "results"
+        input_dir=OUTPUT_DIRPATH / "dogfilter_mov",
+        mask_dir=OUTPUT_DIRPATH / "tierpsy_out" / "masks",
+        results_dir=OUTPUT_DIRPATH / "tierpsy_out" / "results",
     shell:
         """
         docker exec -u root \
@@ -120,6 +123,7 @@ rule run_tierpsy_tracker:
             my_tierpsy_container \
             /bin/bash -c "umask 000; tierpsy_process --video_dir_root local_drive/{params.input_dir} --json_file local_drive/{input.config} --mask_dir_root local_drive/{params.mask_dir} --pattern_include *.mov --results_dir_root local_drive/{params.results_dir}"
         """
+
 
 ########################################################
 ## Quality control
@@ -149,8 +153,9 @@ rule make_projection_from_tiff:
 rule all:
     default_target: True
     input:
-        expand(rules.make_projection_from_tiff.output.png, filepath = FILEPATHS),
-        expand(rules.run_tierpsy_tracker.output.hdf5, filepath = FILEPATHS),
+        expand(rules.make_projection_from_tiff.output.png, filepath=FILEPATHS),
+        expand(rules.run_tierpsy_tracker.output.hdf5, filepath=FILEPATHS),
+
 
 # rule compare_tierpsy_tracker_mask_to_input:
 # rule summarize_tierpsy_tracker_run:
