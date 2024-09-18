@@ -44,9 +44,8 @@ INPUT_PREFIX = config["input_prefix"]  # prefix of input_dirpath to remove from 
 FILEPATHS = find_input_files(
     input_dirpath=config["input_dirpath"], input_prefix_to_remove=INPUT_PREFIX
 )
-CONFIG_FILEPATH = "conf/dogfilter-no-op50-chunks.json"
 OUTPUT_DIRPATH = Path(config["output_dirpath"])
-
+CONFIG_FILEPATH = "conf/dogfilter-no-op50-chunks.json"
 
 rule convert_nd2_to_tiff:
     input:
