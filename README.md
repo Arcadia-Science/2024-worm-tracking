@@ -114,7 +114,7 @@ The pipeline uses the per-worm, per-frame time series motility estimates to gene
 * [`LICENSE`](./LICENSE): License specifying the re-use terms for the code in this repository.
 * [`README.md`](./README.md): File outlining the contents of this repository and how to use the image analysis pipeline.
 * [`Snakefile`](./Snakefile): The snakemake workflow file that orchestrates the full image analysis pipeline.
-* [.github/](./.github), [.vscode/](./.vscode), [.gitignore](./.gitignore), [.pre-commit-config.yaml], [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the developer behavior of the repository.
+* [.github/](./.github), [.vscode/](./.vscode), [.gitignore](./.gitignore), [.pre-commit-config.yaml](./.pre-commit-config.yaml), [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the developer behavior of the repository.
 
 #### Folders and files output by the workflow
 
