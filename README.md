@@ -121,7 +121,11 @@ The pipeline uses the per-worm, per-frame time series motility estimates to gene
 In the user-specified output directory, snakemake creates the following intermediate folders:
 `dogfilter_mov/`, `dogfilter_projection/`, and `dogfilter_tiff/`.
 
-TER TODO: add additional outputs once they are added to the Snakefile
+The Tierpsy tracker results are in the folder `tierpsy_out/`.
+The HDF5 files in the `masks` directory are intermediate files that record a mask that shows which worms are tracked.
+These files are used by the quality control portion of the pipeline.
+The HDF5 files in the `results` directory record the motility information for worms.
+See the Tierpsy tracker [documentation](https://github.com/Tierpsy/tierpsy-tracker/blob/development/docs/OUTPUTS.md) for more information about these outputs.
 
 ### Methods
 
