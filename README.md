@@ -10,7 +10,7 @@ Our images have the following profile:
 * 30 second acquitions
 * 24.5 frames per second
 * 2x field of view
-* worms plated on agar without a bacterial lawn (OP50).
+* Worms plated on agar without a bacterial lawn (OP50).
 
 The image analysis pipeline produces statistical estimates of motility phenotype differences between two strains (typically wildtype and mutant).
 
@@ -91,26 +91,58 @@ Where:
 
 ## Data
 
-TODO: Add details about the description of input / output data and links to Zenodo depositions, if applicable.
+This pipeline is designed to run on vidoes (timeseries of images collected from a single filed of view) of *C. elegans* collected on an upright widefield microscope with limited background (worm tracks etc.) in the images.
+It takes ND2 (Nikon format) files as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
+All analyzed data are currently available on the NAS (`arc_nas/Babu_frik/Justin/`).
 
 ## Overview
 
+This repository implements a simple workflow to estimate and compare worm motility phenotypes.
+It is centered around [Tierpsy tracker](https://github.com/Tierpsy/tierpsy-tracker/tree/development), a method that processes and tracks worms and produces motility data for those worms ([publication](https://royalsocietypublishing.org/doi/10.1098/rstb.2017.0375)).
+The pipeline uses the per-worm, per-frame time series motility estimates to generate simple features (ex. mean length, mean speed, mean tail speed, etc.) that are then compared between strains.
+
 ### Description of the folder structure
+
+#### Folders and files in this repository
+
+* [conf/](./conf/): Configuration files for the tools executed by the pipeline, mainly Tierpsy tracker.
+* [docker/](./docker): Tierpsy tracker needs to be installed by Docker. We provide a Dockerfile documenting changes we made to the Tierpsy tracker image to allow the image to start without a GUI.
+* [envs/](./envs): This repository uses conda to manage software installations and versions. All software required for peptigate use and development is recorded in this folder.
+* [scripts](./scripts): Python, R and bash scripts used by the Snakefile in this repository.
+* [`LICENSE`](./LICENSE): License specifying the re-use terms for the code in this repository.
+* [`README.md`](./README.md): File outlining the contents of this repository and how to use the image analysis pipeline.
+* [`Snakefile`](./Snakefile): The snakemake workflow file that orchestrates the full image analysis pipeline. 
+* [.github](./.github), [.vscode](./.vscode), [.gitignore](./.gitignore), [.pre-commit-confit.yaml], [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the developer behavior of the repository.
+
+#### Folders and files output by the workflow
+
+In the user-specified output directory, snakemake creates the following intermediate folders:
+`dogfilter_mov/`, `dogfilter_projection/`, and `dogfilter_tiff/`.
+
+TER TODO: add additional outputs once they are added to the Snakefile
 
 ### Methods
 
-TODO: Include a brief, step-wise overview of analyses performed.
+The Snakemake file in this repository orchestrates the analysis of raw time series images (videos) for extracting and comparing motility phenotypes between strains of *C. elegans*. 
+The pipeline follows the following steps.
 
-> Example:
->
-> 1.  Download scripts using `download.ipynb`.
-> 2.  Preprocess using `./preprocessing.sh -a data/`
-> 3.  Run Snakemake pipeline `snakemake --snakefile Snakefile`
-> 4.  Generate figures using `pub/make_figures.ipynb`.
+**Motility analysis and comparison**:
+1.  Convert Nikon ND2-formatted images to TIFF format.
+2.  Apply a difference of gaussians (DoG) filter to the TIFF images. This detects differences between the background and foreground. It retains the foreground while applying a grey scale effect to the background.
+3.  Convert the TIFF images to MOV, which is required for Tierpsy tracker motility analysis.
+4.  Run the Tierpsy tracker analysis to produce motility estimates for each worm.
+5.  Process the Tierpsy tracker raw motility estimates and perform statistical analysis to compare strains.
+
+**Quality control**:
+1.  Make a projection from the DoG-filtered TIFF. This creates a summary PNG where all TIFF files from a single time series are overlayed, so that all movement of the worms over the 30 second acquisition is summarized in a single image.
+2.  TODO: Compare the tierpsy tracker mask to the raw image for a single frame.
+3.  TODO: Produce summary stats for each field of view. 
 
 ### Compute Specifications
 
-TODO: Describe what compute resources were used to run the analysis. For example, you could list the operating system, number of cores, RAM, and storage space.
+We executed this pipeline on a Linux Ubuntu machine.
+While the machine has 64 cores and 503 GB RAM, we ran the pipeline on a single core using a small fraction of the available RAM.
+While many of the components of the pipeline would be run on a Mac with an Intel chip, we have tailored the pipeline for Ubuntu (Tierpsy tracker installation and launch).  
 
 ## Contributing
 
