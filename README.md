@@ -1,18 +1,19 @@
-# Analyzing *C. elegans* motility phenotypes with Tierpsy tracker 
+# Analyzing *C. elegans* motility phenotypes with Tierpsy tracker
 
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/projects/miniconda/en/latest/)
 
 ## Purpose
 
 This repository implements an automated approach for analyzing worm motility phenotypes.
-This pipeline is designed to assess worm motility phenotypes from images captured on an upright widefield microscope.
+This pipeline is designed to assess worm motility phenotypes from images captured on an upright wide field microscope.
 Our images have the following profile:
-* 30 second acquitions
+
+* 30 second acquisitions
 * 24.5 frames per second
 * 2x field of view
 * Worms plated on agar without a bacterial lawn (OP50).
 
-The image analysis pipeline produces statistical estimates of motility phenotype differences between two strains (typically wildtype and mutant).
+The image analysis pipeline produces statistical estimates of motility phenotype differences between two strains (typically wild type and mutant).
 
 ## Installation and Setup
 
@@ -81,17 +82,18 @@ snakemake -j 1 \
 ```
 
 Where:
+
 * `-j`: designates the number of cores used by Snakemake to parallelize rules.
 * `--software-deployment-method`: tells Snakemake to launch each rule in a conda environment where specified.
 * `--rerun-incomplete`: tells Snakemake to check that all file are completely written and to re-run those that are not.
 * `--config`: feeds pipeline-specific configuration parameters to snakemake.
-    * `input_dirpath`: The directory where input files are located. If files are located in subdirectories, this is the root filepath for all directories to be analyzed by the snakemake run.  
-    * `input_prefix`: Portion of `input_dirpath` to omit from output file names. A file's absolute path is used as the identifier by this pipeline. When an `input_prefix` is supplied, the prefix will be removed from the output filepath (so instead of having `/home/theia/arc_nas/Babu_frik/Justin` in every output file path, this prefix would be removed). This removes non-identifying information from the output filepaths so that they directory structure doesn't become unnecessarily deep. 
+    * `input_dirpath`: The directory where input files are located. If files are located in subdirectories, this is the root filepath for all directories to be analyzed by the snakemake run.
+    * `input_prefix`: Portion of `input_dirpath` to omit from output file names. A file's absolute path is used as the identifier by this pipeline. When an `input_prefix` is supplied, the prefix will be removed from the output filepath (so instead of having `/home/theia/arc_nas/Babu_frik/Justin` in every output file path, this prefix would be removed). This removes non-identifying information from the output filepaths so that they directory structure doesn't become unnecessarily deep.
     * `output_dirpath`: Directory path to write output files.
 
 ## Data
 
-This pipeline is designed to run on vidoes (timeseries of images collected from a single filed of view) of *C. elegans* collected on an upright widefield microscope with limited background (worm tracks etc.) in the images.
+This pipeline is designed to run on videos (time series of images collected from a single filed of view) of *C. elegans* collected on an upright wide field microscope with limited background (worm tracks etc.) in the images.
 It takes ND2 (Nikon format) files as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
 All analyzed data are currently available on the NAS (`arc_nas/Babu_frik/Justin/`).
 
@@ -107,12 +109,12 @@ The pipeline uses the per-worm, per-frame time series motility estimates to gene
 
 * [conf/](./conf/): Configuration files for the tools executed by the pipeline, mainly Tierpsy tracker.
 * [docker/](./docker): Tierpsy tracker needs to be installed by Docker. We provide a Dockerfile documenting changes we made to the Tierpsy tracker image to allow the image to start without a GUI.
-* [envs/](./envs): This repository uses conda to manage software installations and versions. All software required for peptigate use and development is recorded in this folder.
+* [envs/](./envs): This repository uses conda to manage software installations and versions. Other than Tierpsy tracker, all software installations are managed by environment files in this directory.
 * [scripts](./scripts): Python, R and bash scripts used by the Snakefile in this repository.
 * [`LICENSE`](./LICENSE): License specifying the re-use terms for the code in this repository.
 * [`README.md`](./README.md): File outlining the contents of this repository and how to use the image analysis pipeline.
-* [`Snakefile`](./Snakefile): The snakemake workflow file that orchestrates the full image analysis pipeline. 
-* [.github](./.github), [.vscode](./.vscode), [.gitignore](./.gitignore), [.pre-commit-confit.yaml], [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the developer behavior of the repository.
+* [`Snakefile`](./Snakefile): The snakemake workflow file that orchestrates the full image analysis pipeline.
+* [.github](./.github), [.vscode](./.vscode), [.gitignore](./.gitignore), [.pre-commit-config.yaml], [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the developer behavior of the repository.
 
 #### Folders and files output by the workflow
 
@@ -123,26 +125,28 @@ TER TODO: add additional outputs once they are added to the Snakefile
 
 ### Methods
 
-The Snakemake file in this repository orchestrates the analysis of raw time series images (videos) for extracting and comparing motility phenotypes between strains of *C. elegans*. 
+The Snakemake file in this repository orchestrates the analysis of raw time series images (videos) for extracting and comparing motility phenotypes between strains of *C. elegans*.
 The pipeline follows the following steps.
 
 **Motility analysis and comparison**:
-1.  Convert Nikon ND2-formatted images to TIFF format.
-2.  Apply a difference of gaussians (DoG) filter to the TIFF images. This detects differences between the background and foreground. It retains the foreground while applying a grey scale effect to the background.
-3.  Convert the TIFF images to MOV, which is required for Tierpsy tracker motility analysis.
-4.  Run the Tierpsy tracker analysis to produce motility estimates for each worm.
-5.  Process the Tierpsy tracker raw motility estimates and perform statistical analysis to compare strains.
+
+1. Convert Nikon ND2-formatted images to TIFF format.
+2. Apply a difference of gaussian (DoG) filter to the TIFF images. This detects differences between the background and foreground. It retains the foreground while applying a grey scale effect to the background.
+3. Convert the TIFF images to MOV, which is required for Tierpsy tracker motility analysis.
+4. Run the Tierpsy tracker analysis to produce motility estimates for each worm.
+5. Process the Tierpsy tracker raw motility estimates and perform statistical analysis to compare strains.
 
 **Quality control**:
-1.  Make a projection from the DoG-filtered TIFF. This creates a summary PNG where all TIFF files from a single time series are overlayed, so that all movement of the worms over the 30 second acquisition is summarized in a single image.
-2.  TODO: Compare the tierpsy tracker mask to the raw image for a single frame.
-3.  TODO: Produce summary stats for each field of view. 
+
+1. Make a projection from the DoG-filtered TIFF. This creates a summary PNG where all TIFF files from a single time series are overlaid, so that all movement of the worms over the 30 second acquisition is summarized in a single image.
+2. TODO: Compare the Tierpsy tracker mask to the raw image for a single frame.
+3. TODO: Produce summary stats for each field of view.
 
 ### Compute Specifications
 
 We executed this pipeline on a Linux Ubuntu machine.
 While the machine has 64 cores and 503 GB RAM, we ran the pipeline on a single core using a small fraction of the available RAM.
-While many of the components of the pipeline would be run on a Mac with an Intel chip, we have tailored the pipeline for Ubuntu (Tierpsy tracker installation and launch).  
+While many of the components of the pipeline would be run on a Mac with an Intel chip, we have tailored the pipeline for Ubuntu (Tierpsy tracker installation and launch).
 
 ## Contributing
 
