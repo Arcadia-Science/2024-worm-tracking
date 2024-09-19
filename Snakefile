@@ -103,7 +103,10 @@ rule run_tierpsy_tracker:
         mov=expand(rules.convert_tiff_to_mov.output.mov, filepath=FILEPATHS),
         config=CONFIG_FILEPATH,
     output:
-        hdf5=OUTPUT_DIRPATH / "tierpsy_out" / "results" / "{filepath}_featuresN.hdf5",
+        hdf5=expand(
+            OUTPUT_DIRPATH / "tierpsy_out" / "results" / "{filepath}_featuresN.hdf5",
+            filepath=FILEPATHS,
+        ),
     params:
         input_dir=OUTPUT_DIRPATH / "dogfilter_mov",
         mask_dir=OUTPUT_DIRPATH / "tierpsy_out" / "masks",
