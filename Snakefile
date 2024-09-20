@@ -65,7 +65,7 @@ rule difference_of_gaussians_filter:
     input:
         tiff=rules.convert_nd2_to_tiff.output.tiff,
     output:
-        tiff=OUTPUT_DIRPATH / "dogfilter_tiff" / "{filepath}.tiff",
+        tiff=temp(OUTPUT_DIRPATH / "dogfilter_tiff" / "{filepath}.tiff"),
     conda:
         "envs/dev.yml"
     shell:
@@ -79,7 +79,7 @@ rule convert_tiff_to_mov:
     input:
         tiff=rules.difference_of_gaussians_filter.output.tiff,
     output:
-        mov=OUTPUT_DIRPATH / "dogfilter_mov" / "{filepath}.mov",
+        mov=temp(OUTPUT_DIRPATH / "dogfilter_mov" / "{filepath}.mov"),
     conda:
         "envs/dev.yml"
     shell:
@@ -103,7 +103,11 @@ rule run_tierpsy_tracker:
         mov=expand(rules.convert_tiff_to_mov.output.mov, filepath=FILEPATHS),
         config=CONFIG_FILEPATH,
     output:
-        hdf5=expand(
+        hdf5_mask=expand(
+            OUTPUT_DIRPATH / "tierpsy_out" / "masks" / "{filepath}.hdf5",
+            filepath=FILEPATHS,
+        ),
+        hdf5_result=expand(
             OUTPUT_DIRPATH / "tierpsy_out" / "results" / "{filepath}_featuresN.hdf5",
             filepath=FILEPATHS,
         ),
@@ -144,7 +148,7 @@ rule make_projection_from_tiff:
     input:
         tiff=rules.difference_of_gaussians_filter.output.tiff,
     output:
-        png=OUTPUT_DIRPATH / "dogfilter_projection" / "{filepath}.png",
+        png=OUTPUT_DIRPATH / "quality_control" / "dogfilter_projection" / "{filepath}.png",
     conda:
         "envs/dev.yml"
     shell:
@@ -152,15 +156,25 @@ rule make_projection_from_tiff:
         python scripts/make_projection_from_tiff.py --tiff-path {input.tiff} --output-path {output.png}
         """
 
+rule compare_tierpsy_mask_to_input_mov:
+    input:
+        hdf5=OUTPUT_DIRPATH / "tierpsy_out" / "masks" / "{filepath}.hdf5",
+        mov=rules.convert_tiff_to_mov.output.mov
+    output: png=OUTPUT_DIRPATH / "quality_control" / "compare_tierpsy_mask_to_input_mov" / "{filepath}.png"
+    conda: "envs/dev.yml"
+    shell:
+        """
+        python scripts/compare_tierpsy_mask_to_input_mov.py {input.hdf5} {input.mov} {output.png}
+        """
 
 rule all:
     default_target: True
     input:
+        expand(rules.compare_tierpsy_mask_to_input_mov.output.png, filepath=FILEPATHS),
         expand(rules.make_projection_from_tiff.output.png, filepath=FILEPATHS),
-        expand(rules.run_tierpsy_tracker.output.hdf5, filepath=FILEPATHS),
+        expand(rules.run_tierpsy_tracker.output.hdf5_result, filepath=FILEPATHS),
 
 
-# rule compare_tierpsy_tracker_mask_to_input:
 # rule summarize_tierpsy_tracker_run:
 # """
 # * Number of worms counted
