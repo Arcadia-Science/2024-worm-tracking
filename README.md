@@ -26,7 +26,7 @@ conda activate wormmotility
 
 In addition, the tool [Tierpsy tracker](https://github.com/Tierpsy/tierpsy-tracker/blob/development/docs/INSTALLATION_DOCKER.md) recommends/requires installation via Docker.
 Because of the way the Docker container is configured, we had trouble running it with Singularity inside of snakemake (see this [issue](https://github.com/Arcadia-Science/2024-worm-tracking/issues/4)).
-We came up with a workaround where the Docker container is started and run in the background and then commands are executed in the Docker container by Snakemake.
+We came up with a workaround where the Docker container runs in the background and then commands are executed in the Docker container by Snakemake. This requires starting the Docker container before running the pipeline.
 This is a sub-par solution, but we decided this was the best approach given time and bandwidth limitations.
 
 To enable Tierpsy tracker execution within the Docker container and via snakemake, start by installing Docker Desktop according to your operating system.
@@ -93,8 +93,8 @@ Where:
 
 ## Data
 
-This pipeline is designed to run on videos (time series of images collected from a single filed of view) of *C. elegans* collected on an upright wide field microscope with limited background (worm tracks etc.) in the images.
-It takes ND2 (Nikon format) files as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
+This pipeline is designed to run on videos (time series of images collected from a single field of view) of live adult *C. elegans*. Importantly, the videos should have a relatively homogenous background (i.e., little variation in intensity or contrast).
+It takes raw image files (in Nikon's ND2 format) as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
 All analyzed data are currently available on the NAS (`arc_nas/Babu_frik/Justin/`).
 
 ## Overview
@@ -114,7 +114,7 @@ The pipeline uses the per-worm, per-frame time series motility estimates to gene
 * [`LICENSE`](./LICENSE): License specifying the re-use terms for the code in this repository.
 * [`README.md`](./README.md): File outlining the contents of this repository and how to use the image analysis pipeline.
 * [`Snakefile`](./Snakefile): The snakemake workflow file that orchestrates the full image analysis pipeline.
-* [.github/](./.github), [.vscode/](./.vscode), [.gitignore](./.gitignore), [.pre-commit-config.yaml](./.pre-commit-config.yaml), [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the developer behavior of the repository.
+* [.github/](./.github), [.vscode/](./.vscode), [.gitignore](./.gitignore), [.pre-commit-config.yaml](./.pre-commit-config.yaml), [Makefile](./Makefile), [pyproject.toml](./Makefile): Files that control the development environment of the repository.
 
 #### Folders and files output by the workflow
 
@@ -134,9 +134,9 @@ The pipeline follows the following steps.
 
 **Motility analysis and comparison**:
 
-1. Convert Nikon ND2-formatted images to TIFF format.
-2. Apply a difference of gaussian (DoG) filter to the TIFF images. This detects differences between the background and foreground. It retains the foreground while applying a grey scale effect to the background.
-3. Convert the TIFF images to MOV, which is required for Tierpsy tracker motility analysis.
+1. Convert raw images from Nikon's ND2 format to TIFF format.
+2. Apply a difference of gaussian (DoG) filter to the TIFF images. This detects differences between the background and foreground. It retains the foreground (the worms) while masking out the background.
+3. Convert the TIFF image series to MOV files, as MOV is the format required by Tierpsy tracker.
 4. Run the Tierpsy tracker analysis to produce motility estimates for each worm.
 5. Process the Tierpsy tracker raw motility estimates and perform statistical analysis to compare strains.
 
