@@ -10,7 +10,9 @@ Our images have the following profile:
 
 * 30 second acquisitions
 * 24.5 frames per second
-* 2x field of view
+* Field of view:
+    * 1976 x 1976 pixels
+    * 1.625 microns per pixel
 * Worms plated on agar without a bacterial lawn (OP50).
 
 The image analysis pipeline produces statistical estimates of motility phenotype differences between two strains (typically wild type and mutant).
@@ -78,7 +80,7 @@ To start the pipeline, run:
 snakemake -j 1 \
     --software-deployment-method conda \
     --rerun-incomplete \
-    --config input_dirpath=/home/theia/arc_nas/Babu_frik/Justin/2024-08-20/N2_pl1 input_prefix=/home/theia/arc_nas/Babu_frik/Justin output_dirpath=outputs
+    --config input_dirpath=/path/to/raw/dataset/dir input_prefix=/prefix/to/remove/from/input_dirpath output_dirpath=outputs
 ```
 
 Where:
@@ -95,7 +97,7 @@ Where:
 
 This pipeline is designed to run on videos (time series of images collected from a single field of view) of live adult *C. elegans*. Importantly, the videos should have a relatively homogenous background (i.e., little variation in intensity or contrast).
 It takes raw image files (in Nikon's ND2 format) as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
-All analyzed data are currently available on the NAS (`arc_nas/Babu_frik/Justin/`).
+All analyzed data are currently available on the NAS (TODO: update to public data location).
 
 ## Overview
 
