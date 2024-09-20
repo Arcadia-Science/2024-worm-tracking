@@ -155,7 +155,7 @@ The pipeline follows the following steps.
 ### Compute Specifications
 
 We executed this pipeline on a Linux Ubuntu machine.
-While the machine has 64 cores and 503 GB RAM, we ran the pipeline on a single core using a small fraction of the available RAM.
+While the machine has 64 cores and 512 GB RAM, we ran the pipeline on a single core using a small fraction of the available RAM.
 While many of the components of the pipeline would be run on a Mac with an Intel chip, we have tailored the pipeline for Ubuntu (Tierpsy tracker installation and launch).
 
 ## Contributing
