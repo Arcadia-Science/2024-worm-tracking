@@ -19,7 +19,9 @@ The image analysis pipeline produces statistical estimates of motility phenotype
 
 ## Installation and Setup
 
-This repository primarily uses conda to manage software environments and installations. You can find operating system-specific instructions for installing miniconda [here](https://docs.conda.io/projects/miniconda/en/latest/). After installing conda and [mamba](https://mamba.readthedocs.io/en/latest/), run the following command to create the pipeline run environment.
+This repository primarily uses conda to manage software environments and installations.
+You can find operating system-specific instructions for installing miniconda [here](https://docs.conda.io/projects/miniconda/en/latest/).
+After installing conda and [mamba](https://mamba.readthedocs.io/en/latest/), run the following command to create the pipeline run environment.
 
 ```{bash}
 mamba env create -n wormmotility --file envs/dev.yml
@@ -28,7 +30,8 @@ conda activate wormmotility
 
 In addition, the tool [Tierpsy tracker](https://github.com/Tierpsy/tierpsy-tracker/blob/development/docs/INSTALLATION_DOCKER.md) recommends/requires installation via Docker.
 Because of the way the Docker container is configured, we had trouble running it with Singularity inside of snakemake (see this [issue](https://github.com/Arcadia-Science/2024-worm-tracking/issues/4)).
-We came up with a workaround where the Docker container runs in the background and then commands are executed in the Docker container by Snakemake. This requires starting the Docker container before running the pipeline.
+We came up with a workaround where the Docker container runs in the background and then commands are executed in the Docker container by Snakemake.
+This requires starting the Docker container before running the pipeline.
 This is a sub-par solution, but we decided this was the best approach given time and bandwidth limitations.
 
 To enable Tierpsy tracker execution within the Docker container and via snakemake, start by installing Docker Desktop according to your operating system.
@@ -95,7 +98,8 @@ Where:
 
 ## Data
 
-This pipeline is designed to run on videos (time series of images collected from a single field of view) of live adult *C. elegans*. Importantly, the videos should have a relatively homogenous background (i.e., little variation in intensity or contrast).
+This pipeline is designed to run on videos (time series of images collected from a single field of view) of live adult *C. elegans*.
+Importantly, the videos should have a relatively homogenous background (i.e., little variation in intensity or contrast).
 It takes raw image files (in Nikon's ND2 format) as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
 All analyzed data are currently available on the NAS (TODO: update to public data location).
 
