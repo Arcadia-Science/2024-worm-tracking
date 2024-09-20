@@ -156,16 +156,23 @@ rule make_projection_from_tiff:
         python scripts/make_projection_from_tiff.py --tiff-path {input.tiff} --output-path {output.png}
         """
 
+
 rule compare_tierpsy_mask_to_input_mov:
     input:
         hdf5=OUTPUT_DIRPATH / "tierpsy_out" / "masks" / "{filepath}.hdf5",
-        mov=rules.convert_tiff_to_mov.output.mov
-    output: png=OUTPUT_DIRPATH / "quality_control" / "compare_tierpsy_mask_to_input_mov" / "{filepath}.png"
-    conda: "envs/dev.yml"
+        mov=rules.convert_tiff_to_mov.output.mov,
+    output:
+        png=OUTPUT_DIRPATH
+        / "quality_control"
+        / "compare_tierpsy_mask_to_input_mov"
+        / "{filepath}.png",
+    conda:
+        "envs/dev.yml"
     shell:
         """
         python scripts/compare_tierpsy_mask_to_input_mov.py {input.hdf5} {input.mov} {output.png}
         """
+
 
 rule all:
     default_target: True
