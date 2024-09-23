@@ -1,6 +1,6 @@
 [project]
-name = "TODO: Tool name"
-description = "TODO: Tool description"
+name = "2024-worm-tracking"
+description = "Estimate motility phenotypes from worm images"
 version = "0.0.0"
 readme = "README.md"
 requires-python = ">=3.12"
