@@ -35,8 +35,8 @@ def main(nd2_path: str, json_path: str) -> None:
     Returns:
         None
     """
-    with nd2.ND2File(nd2_path) as reader:
-        metadata = reader.metadata
+    with nd2.ND2File(nd2_path) as nd2_file:
+        metadata = nd2_file.metadata
 
     serializable_metadata = serialize_metadata(metadata)
 
