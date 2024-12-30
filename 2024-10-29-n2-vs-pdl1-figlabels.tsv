@@ -1,0 +1,267 @@
+measurement_type	measurement_class	body_part	parameter	effect	group	term	estimate	std.error	statistic	df	p.value	p_adj_bonferroni
+base	speed	head	speed_head_tip_mean	fixed	NA	strainpdl-1	9.347541858	0.890286393	10.4994774	576.5614602	1.02E-23	2.05E-23
+base	speed	head	speed_head_base_mean	fixed	NA	strainpdl-1	7.882026204	0.819969104	9.612589261	576.7886939	2.17E-20	4.33E-20
+base	speed	neck	speed_neck_mean	fixed	NA	strainpdl-1	7.428475646	0.787424497	9.433889438	576.9359662	9.57E-20	1.91E-19
+base	speed	midbody	speed_midbody_mean	fixed	NA	strainpdl-1	6.379460625	0.713647977	8.9392261	576.9898612	5.27E-18	1.05E-17
+base	speed	whole_worm	speed_mean	fixed	NA	strainpdl-1	5.799598261	0.65799618	8.814030291	576.7724326	1.42E-17	2.84E-17
+base	angular_velocity	head	relative_to_neck_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.160925876	0.018642148	8.632367503	570.2247739	6.01E-17	1.20E-16
+base	angular_velocity	head	angular_velocity_head_base_mean	fixed	NA	strainpdl-1	0.211994606	0.024591161	8.620764518	576.298027	6.43E-17	1.29E-16
+base	speed	hips	speed_hips_mean	fixed	NA	strainpdl-1	6.648844177	0.777936048	8.546774755	576.9448992	1.13E-16	2.27E-16
+base	speed	midbody	relative_to_body_speed_midbody_mean	fixed	NA	strainpdl-1	2.096896616	0.24560666	8.537621151	570.4215617	1.25E-16	2.49E-16
+base	morphology_posture	midbody	curvature_std_midbody_mean	fixed	NA	strainpdl-1	-0.005024719	5.99E-04	-8.390985241	581.3494883	3.67E-16	7.35E-16
+base	speed	tail	speed_tail_base_mean	fixed	NA	strainpdl-1	6.59394654	0.806660823	8.174373113	576.8476726	1.90E-15	3.79E-15
+base	angular_velocity	neck	angular_velocity_neck_mean	fixed	NA	strainpdl-1	0.163653354	0.020234686	8.08776356	576.5529873	3.60E-15	7.20E-15
+base	angular_velocity	head	relative_to_body_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.077205473	0.009664512	7.988553845	570.2131981	7.59E-15	1.52E-14
+base	speed	tail	speed_tail_tip_mean	fixed	NA	strainpdl-1	6.619714497	0.843105072	7.851588982	576.8718148	2.01E-14	4.02E-14
+base	angular_velocity	midbody	angular_velocity_midbody_mean	fixed	NA	strainpdl-1	0.10752164	0.013748097	7.820838306	576.8871387	2.51E-14	5.02E-14
+base	morphology_posture	neck	curvature_std_neck_mean	fixed	NA	strainpdl-1	-0.003075001	4.17E-04	-7.372945995	581.6889123	5.77E-13	1.15E-12
+base	angular_velocity	neck	relative_to_body_angular_velocity_neck_mean	fixed	NA	strainpdl-1	0.058651312	0.00828873	7.076031137	570.6559817	4.37E-12	8.73E-12
+base	angular_velocity	hips	relative_to_body_angular_velocity_hips_mean	fixed	NA	strainpdl-1	0.055385624	0.008094662	6.842240322	570.4543182	2.02E-11	4.03E-11
+base	radial_velocity	head	relative_to_body_radial_velocity_head_tip_mean	fixed	NA	strainpdl-1	2.563973501	0.390958237	6.558177471	570.3466167	1.22E-10	2.44E-10
+base	morphology_size	head	width_head_base_mean	fixed	NA	strainpdl-1	1.494538952	0.233166986	6.409736541	582	3.01E-10	6.03E-10
+base	morphology_size	whole_worm	length_mean	fixed	NA	strainpdl-1	21.07789384	3.308820168	6.370214388	582	3.84E-10	7.67E-10
+base	morphology_size	whole_worm	area_mean	fixed	NA	strainpdl-1	433.072918	70.71071545	6.124572707	581.816531	1.67E-09	3.35E-09
+base	morphology_size	midbody	width_midbody_mean	fixed	NA	strainpdl-1	1.648893526	0.269586638	6.116377061	582	1.76E-09	3.51E-09
+differential	speed	midbody	d_relative_to_body_speed_midbody_mean	fixed	NA	strainpdl-1	4.706995717	0.777545825	6.053656985	560.4986504	2.59E-09	5.19E-09
+base	angular_velocity	tail	relative_to_hips_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.113023372	0.018772697	6.020625304	571	3.11E-09	6.22E-09
+base	morphology_size	whole_worm	head_tail_distance_mean	fixed	NA	strainpdl-1	18.46371624	3.105800713	5.944913388	582	4.77E-09	9.54E-09
+base	morphology_posture	head	curvature_std_head_mean	fixed	NA	strainpdl-1	-0.002050467	3.49E-04	-5.872136717	581.9948243	7.24E-09	1.45E-08
+base	morphology_posture	neck	curvature_neck_mean	fixed	NA	strainpdl-1	-0.005122335	8.83E-04	-5.799467009	581.9618668	1.09E-08	2.18E-08
+differential	angular_velocity	head	d_relative_to_neck_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.390189593	0.067543565	5.776858105	560.4448586	1.26E-08	2.53E-08
+base	angular_velocity	hips	angular_velocity_hips_mean	fixed	NA	strainpdl-1	0.119014234	0.020778236	5.727831405	576.8311954	1.64E-08	3.28E-08
+base	radial_velocity	head	relative_to_neck_radial_velocity_head_tip_mean	fixed	NA	strainpdl-1	1.055363241	0.193843223	5.444416504	570.6645909	7.73E-08	1.55E-07
+base	morphology_size	tail	width_tail_base_mean	fixed	NA	strainpdl-1	0.946135058	0.183762633	5.14868034	581.2654182	3.60E-07	7.19E-07
+base	angular_velocity	tail	angular_velocity_tail_base_mean	fixed	NA	strainpdl-1	0.120773715	0.023592255	5.119210403	577	4.19E-07	8.37E-07
+differential	radial_velocity	head	d_relative_to_body_radial_velocity_head_tip_mean	fixed	NA	strainpdl-1	8.74327183	1.753766737	4.9854246	560.5150394	8.25E-07	1.65E-06
+base	morphology_posture	tail	curvature_std_tail_mean	fixed	NA	strainpdl-1	-0.001682783	3.43E-04	-4.905603305	581.9734599	1.21E-06	2.42E-06
+base	morphology_posture	hips	curvature_std_hips_mean	fixed	NA	strainpdl-1	-0.002070252	4.27E-04	-4.848406874	582	1.60E-06	3.20E-06
+differential	radial_velocity	head	d_relative_to_neck_radial_velocity_head_tip_mean	fixed	NA	strainpdl-1	4.891195035	1.015051448	4.818667117	560.6913022	1.86E-06	3.73E-06
+base	morphology_posture	midbody	curvature_midbody_mean	fixed	NA	strainpdl-1	-0.004053147	8.55E-04	-4.73943007	582	2.70E-06	5.39E-06
+base	morphology_posture	head	curvature_head_mean	fixed	NA	strainpdl-1	-0.004598098	9.77E-04	-4.704442862	581.3723458	3.18E-06	6.37E-06
+base	morphology_posture	head	curvature_mean_head_mean	fixed	NA	strainpdl-1	-0.004196817	9.18E-04	-4.573530449	581.2952975	5.86E-06	1.17E-05
+differential	angular_velocity	midbody	d_angular_velocity_midbody_mean	fixed	NA	strainpdl-1	0.200837559	0.045359905	4.427645084	571	1.14E-05	2.28E-05
+differential	morphology_posture	neck	d_curvature_mean_neck_mean	fixed	NA	strainpdl-1	0.005112927	0.001170233	4.369153531	570.247653	1.48E-05	2.96E-05
+base	morphology_posture	hips	curvature_hips_mean	fixed	NA	strainpdl-1	-0.003976902	9.13E-04	-4.35731036	582	1.56E-05	3.11E-05
+differential	angular_velocity	head	d_angular_velocity_head_base_mean	fixed	NA	strainpdl-1	0.36418674	0.084510366	4.309373609	570.5700523	1.93E-05	3.86E-05
+base	radial_velocity	neck	relative_to_body_radial_velocity_neck_mean	fixed	NA	strainpdl-1	0.682605235	0.159174913	4.288397102	570.8350433	2.11E-05	4.23E-05
+base	morphology_posture	neck	curvature_mean_neck_mean	fixed	NA	strainpdl-1	-0.003641671	8.50E-04	-4.285686392	582	2.13E-05	4.26E-05
+differential	angular_velocity	neck	d_angular_velocity_neck_mean	fixed	NA	strainpdl-1	0.299720809	0.070099422	4.275653052	570.7159916	2.23E-05	4.47E-05
+differential	morphology_posture	head	d_curvature_std_head_mean	fixed	NA	strainpdl-1	-0.002201291	5.56E-04	-3.962244214	570.4983703	8.37E-05	1.67E-04
+differential	angular_velocity	hips	d_relative_to_body_angular_velocity_hips_mean	fixed	NA	strainpdl-1	0.10925169	0.027659684	3.949853134	560.4537064	8.82E-05	1.76E-04
+base	morphology_posture	hips	curvature_mean_hips_mean	fixed	NA	strainpdl-1	-0.003508005	9.04E-04	-3.882674456	582	1.15E-04	2.30E-04
+differential	angular_velocity	head	d_relative_to_body_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.132160403	0.034163482	3.868469974	560.3428294	1.22E-04	2.45E-04
+base	angular_velocity	whole_worm	angular_velocity_mean	fixed	NA	strainpdl-1	0.021734248	0.005684098	3.823693419	576.6785332	1.46E-04	2.92E-04
+base	directionality	whole_worm	motion_mode_mean	fixed	NA	strainpdl-1	0.129954968	0.034450487	3.772224468	576.9670133	1.78E-04	3.57E-04
+base	morphology_posture	tail	curvature_mean_tail_mean	fixed	NA	strainpdl-1	-0.003457291	9.36E-04	-3.694839995	581.8075403	2.41E-04	4.82E-04
+differential	morphology_posture	midbody	d_curvature_mean_midbody_mean	fixed	NA	strainpdl-1	0.002599236	7.38E-04	3.520729383	570.4293657	4.65E-04	9.29E-04
+differential	morphology_posture	hips	d_curvature_mean_hips_mean	fixed	NA	strainpdl-1	0.003706076	0.001054669	3.513969855	570.9039536	4.76E-04	9.53E-04
+differential	angular_velocity	neck	d_relative_to_body_angular_velocity_neck_mean	fixed	NA	strainpdl-1	0.10521166	0.030122883	3.492748666	560.9875228	5.16E-04	0.001031517
+base	angular_velocity	head	angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.125558473	0.037889975	3.313764992	577	9.78E-04	0.001956331
+base	radial_velocity	hips	relative_to_body_radial_velocity_hips_mean	fixed	NA	strainpdl-1	0.521113129	0.158008035	3.298016632	570.9814751	0.001034267	0.002068534
+differential	morphology_size	head	d_width_head_base_mean	fixed	NA	strainpdl-1	-0.392721918	0.122749342	-3.199381032	566.5786853	0.00145422	0.00290844
+differential	morphology_posture	tail	d_curvature_std_tail_mean	fixed	NA	strainpdl-1	-0.001686985	5.35E-04	-3.153285898	571	0.001699228	0.003398455
+base	morphology_posture	tail	curvature_tail_mean	fixed	NA	strainpdl-1	-0.00328913	0.001045217	-3.146839776	581.7627808	0.001734861	0.003469722
+base	angular_velocity	tail	relative_to_body_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.036847688	0.012711962	2.898662462	570.5132873	0.003891685	0.007783371
+base	radial_velocity	tail	relative_to_body_radial_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.86268535	0.305607572	2.822853319	570.9666319	0.004925777	0.009851555
+differential	angular_velocity	tail	d_relative_to_hips_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.203842291	0.074746922	2.727099458	561	0.006589334	0.013178668
+differential	morphology_posture	hips	d_curvature_hips_mean	fixed	NA	strainpdl-1	0.003082963	0.00117059	2.633682348	570.7269222	0.008675495	0.017350989
+base	directionality	whole_worm	path_curvature_body_mean	fixed	NA	strainpdl-1	-4.85543E+17	1.85069E+17	-2.623579461	99016.89378	0.008702448	0.017404897
+base	directionality	midbody	path_curvature_midbody_mean	fixed	NA	strainpdl-1	-4.43046E+17	1.71676E+17	-2.58070083	124625.1394	0.009861131	0.019722263
+base	directionality	tail	path_curvature_tail_mean	fixed	NA	strainpdl-1	-3.86407E+17	1.57611E+17	-2.45164219	62592.8571	0.014223312	0.028446623
+base	directionality	head	path_curvature_head_mean	fixed	NA	strainpdl-1	-3.64106E+17	1.49E+17	-2.44321208	105884.6192	0.014558802	0.029117603
+differential	morphology_size	tail	d_width_tail_base_mean	fixed	NA	strainpdl-1	-0.200793442	0.089268171	-2.249328521	567	0.024874499	0.049748998
+differential	morphology_posture	midbody	d_curvature_std_midbody_mean	fixed	NA	strainpdl-1	8.87E-04	3.95E-04	2.247007468	570.7266665	0.025020872	0.050041745
+base	morphology_posture	midbody	curvature_mean_midbody_mean	fixed	NA	strainpdl-1	-0.001392489	6.40E-04	-2.174636116	582	0.030059418	0.060118837
+differential	morphology_size	midbody	d_width_midbody_mean	fixed	NA	strainpdl-1	-0.159444912	0.077784339	-2.049833088	567	0.040840147	0.081680293
+base	radial_velocity	tail	relative_to_hips_radial_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.321766526	0.175528806	1.833126612	571	0.067304189	0.134608378
+differential	angular_velocity	tail	d_relative_to_tail_base_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	-0.140633233	0.080802233	-1.740462203	561	0.082326199	0.164652398
+base	angular_velocity	head	relative_to_head_base_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.030225085	0.017394894	1.737583686	570.9223487	0.082823436	0.165646873
+differential	radial_velocity	neck	d_relative_to_body_radial_velocity_neck_mean	fixed	NA	strainpdl-1	1.373881659	0.792941412	1.732639559	560.7155159	0.083709601	0.167419201
+differential	angular_velocity	tail	d_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	-0.315312989	0.182337526	-1.729281934	571	0.084299109	0.168598218
+differential	morphology_size	whole_worm	d_length_mean	fixed	NA	strainpdl-1	-1.097770685	0.661860727	-1.658612817	571	0.097743002	0.195486004
+base	eigenworm	whole_worm	eigen_projection_5_mean	fixed	NA	strainpdl-1	-0.063119507	0.042728745	-1.477214151	581.7155011	0.140159404	0.280318808
+differential	angular_velocity	hips	d_angular_velocity_hips_mean	fixed	NA	strainpdl-1	0.129598531	0.089012986	1.455950839	570.8987262	0.145955901	0.291911803
+base	angular_velocity	tail	angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.04818614	0.034108106	1.412747466	577	0.158269149	0.316538298
+base	eigenworm	whole_worm	eigen_projection_1_mean	fixed	NA	strainpdl-1	-0.248389892	0.183229274	-1.3556234	582	0.175744824	0.351489647
+differential	speed	head	d_speed_head_tip_mean	fixed	NA	strainpdl-1	2.845917355	2.138370948	1.330881042	571	0.183759335	0.367518671
+differential	eigenworm	whole_worm	d_eigen_projection_5_mean	fixed	NA	strainpdl-1	-0.032233636	0.02492065	-1.293450846	570.7369216	0.196378418	0.392756836
+base	morphology_posture	whole_worm	quirkiness_mean	fixed	NA	strainpdl-1	0.004058218	0.003155437	1.286103358	582	0.198918405	0.397836811
+differential	eigenworm	whole_worm	d_eigen_projection_4_mean	fixed	NA	strainpdl-1	0.041108695	0.033588804	1.223880871	571	0.221501936	0.443003872
+differential	speed	neck	d_speed_neck_mean	fixed	NA	strainpdl-1	1.849017226	1.532929549	1.206198437	570.8838539	0.22824062	0.456481241
+differential	morphology_posture	neck	d_curvature_neck_mean	fixed	NA	strainpdl-1	0.001540353	0.001316785	1.169783645	570.2216735	0.242576754	0.485153507
+base	eigenworm	whole_worm	eigen_projection_3_mean	fixed	NA	strainpdl-1	0.121655329	0.105981982	1.147886902	581.7425408	0.251487072	0.502974144
+differential	morphology_posture	neck	d_curvature_std_neck_mean	fixed	NA	strainpdl-1	-5.15E-04	4.49E-04	-1.146652529	570.3908856	0.252006034	0.504012068
+differential	speed	midbody	d_speed_midbody_mean	fixed	NA	strainpdl-1	1.625464587	1.47006628	1.105708367	571	0.269318418	0.538636837
+differential	speed	whole_worm	d_speed_mean	fixed	NA	strainpdl-1	1.451837236	1.329135955	1.092316576	571	0.275154627	0.550309254
+differential	speed	hips	d_speed_hips_mean	fixed	NA	strainpdl-1	2.100769576	1.937601168	1.084211555	571	0.278728583	0.557457166
+differential	radial_velocity	hips	d_relative_to_body_radial_velocity_hips_mean	fixed	NA	strainpdl-1	0.814260777	0.760028689	1.071355317	561	0.284470378	0.568940756
+base	directionality	whole_worm	turn_mean	fixed	NA	strainpdl-1	0.008769312	0.00820764	1.068432868	593	0.285760034	0.571520067
+differential	radial_velocity	tail	d_relative_to_tail_base_radial_velocity_tail_tip_mean	fixed	NA	strainpdl-1	-0.450253399	0.428388131	-1.051040789	561	0.293692384	0.587384768
+differential	morphology_posture	midbody	d_curvature_midbody_mean	fixed	NA	strainpdl-1	0.001354277	0.001298867	1.042660586	570.2429125	0.297547343	0.595094685
+differential	morphology_size	whole_worm	d_area_mean	fixed	NA	strainpdl-1	-7.352919595	7.284522437	-1.009389381	571	0.313215467	0.626430934
+differential	directionality	midbody	d_path_curvature_midbody_mean	fixed	NA	strainpdl-1	-1.890165061	1.893396415	-0.998293356	391.9808973	0.318752984	0.637505967
+base	angular_velocity	tail	relative_to_tail_base_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.015182562	0.015544684	0.976704441	571	0.329129101	0.658258202
+differential	directionality	head	d_path_curvature_head_mean	fixed	NA	strainpdl-1	-0.329951695	0.353917591	-0.932283963	445.3066485	0.351694975	0.70338995
+differential	morphology_posture	whole_worm	d_quirkiness_mean	fixed	NA	strainpdl-1	0.002292456	0.002637922	0.869038743	570.7957067	0.385191202	0.770382405
+differential	speed	tail	d_speed_tail_base_mean	fixed	NA	strainpdl-1	1.853822761	2.227820774	0.832123832	571	0.405686922	0.811373843
+differential	morphology_posture	tail	d_curvature_tail_mean	fixed	NA	strainpdl-1	-0.001868972	0.002267993	-0.824064549	571	0.410246956	0.820493912
+differential	speed	head	d_speed_head_base_mean	fixed	NA	strainpdl-1	1.382845513	1.734249958	0.79737382	570.8263032	0.425565508	0.851131015
+differential	morphology_posture	head	d_curvature_head_mean	fixed	NA	strainpdl-1	-0.001532808	0.001931102	-0.793747768	571	0.427672012	0.855344024
+differential	radial_velocity	head	d_relative_to_head_base_radial_velocity_head_tip_mean	fixed	NA	strainpdl-1	-0.300067654	0.391305459	-0.766837382	561	0.443500784	0.887001568
+differential	eigenworm	whole_worm	d_eigen_projection_7_mean	fixed	NA	strainpdl-1	0.011083669	0.015696416	0.706127331	571	0.480396961	0.960793922
+differential	radial_velocity	tail	d_relative_to_body_radial_velocity_tail_tip_mean	fixed	NA	strainpdl-1	1.089080368	1.561124014	0.697625787	560.9710091	0.485700287	0.971400574
+differential	morphology_posture	tail	d_curvature_mean_tail_mean	fixed	NA	strainpdl-1	0.001079179	0.001563812	0.69009482	571	0.490414944	0.980829887
+differential	speed	tail	d_speed_tail_tip_mean	fixed	NA	strainpdl-1	1.7082611	2.483588084	0.687819817	571	0.491845558	0.983691117
+differential	eigenworm	whole_worm	d_eigen_projection_3_mean	fixed	NA	strainpdl-1	-0.038263283	0.055872315	-0.6848344	571	0.493726311	0.987452623
+base	radial_velocity	head	relative_to_head_base_radial_velocity_head_tip_mean	fixed	NA	strainpdl-1	-0.025620345	0.066676562	-0.384248143	570.7563667	0.700937653	1
+base	radial_velocity	tail	relative_to_tail_base_radial_velocity_tail_tip_mean	fixed	NA	strainpdl-1	-0.04800043	0.072265333	-0.664224857	571	0.506814532	1
+base	eigenworm	whole_worm	eigen_projection_2_mean	fixed	NA	strainpdl-1	0.085281273	0.131426982	0.648887103	582	0.516667312	1
+base	eigenworm	whole_worm	eigen_projection_4_mean	fixed	NA	strainpdl-1	0.030658237	0.069020965	0.444187317	582	0.657072271	1
+base	eigenworm	whole_worm	eigen_projection_6_mean	fixed	NA	strainpdl-1	0.013430846	0.02348418	0.571910351	582	0.567603529	1
+base	eigenworm	whole_worm	eigen_projection_7_mean	fixed	NA	strainpdl-1	-0.004082257	0.018039447	-0.22629611	581.8618611	0.821050595	1
+differential	angular_velocity	whole_worm	d_angular_velocity_mean	fixed	NA	strainpdl-1	-0.005052705	0.023114318	-0.218596329	570.5578109	0.827042679	1
+differential	angular_velocity	tail	d_relative_to_body_angular_velocity_tail_tip_mean	fixed	NA	strainpdl-1	-0.015696631	0.056118791	-0.279703651	560.7486842	0.779808018	1
+differential	angular_velocity	head	d_relative_to_head_base_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.010082533	0.098668531	0.102185908	560.9334634	0.918645631	1
+differential	radial_velocity	tail	d_relative_to_hips_radial_velocity_tail_tip_mean	fixed	NA	strainpdl-1	0.49995914	0.980078785	0.510121377	560.9594999	0.610167081	1
+differential	angular_velocity	tail	d_angular_velocity_tail_base_mean	fixed	NA	strainpdl-1	0.0705563	0.105719442	0.667391907	571	0.504791457	1
+differential	angular_velocity	head	d_angular_velocity_head_tip_mean	fixed	NA	strainpdl-1	0.025816359	0.207902011	0.124175612	570.9204663	0.901219938	1
+differential	eigenworm	whole_worm	d_eigen_projection_1_mean	fixed	NA	strainpdl-1	-7.38E-04	0.047199488	-0.015634195	571	0.987531687	1
+differential	eigenworm	whole_worm	d_eigen_projection_2_mean	fixed	NA	strainpdl-1	-0.03200107	0.063996701	-0.500042502	570.9965672	0.617237799	1
+differential	eigenworm	whole_worm	d_eigen_projection_6_mean	fixed	NA	strainpdl-1	0.012604747	0.019897746	0.633476144	571	0.526676401	1
+differential	morphology_posture	head	d_curvature_mean_head_mean	fixed	NA	strainpdl-1	8.45E-04	0.001633267	0.517638702	571	0.604910852	1
+differential	morphology_posture	hips	d_curvature_std_hips_mean	fixed	NA	strainpdl-1	2.32E-05	3.99E-04	0.057956064	570.4468198	0.953803921	1
+differential	directionality	whole_worm	d_path_curvature_body_mean	fixed	NA	strainpdl-1	0.503458483	1.013312331	0.496844327	363	0.619599594	1
+differential	directionality	tail	d_path_curvature_tail_mean	fixed	NA	strainpdl-1	-0.470094962	2.779989484	-0.169099547	427.7432092	0.865798278	1
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
