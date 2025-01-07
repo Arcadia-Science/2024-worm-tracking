@@ -4,6 +4,7 @@
 
 ## Purpose
 
+This repository accompanies the pub, ["An experimental and computational workflow to characterize nematode motility behavior"](https://doi.org/10.57844/arcadia-b89a-7e76).
 This repository implements an automated approach for analyzing worm motility phenotypes.
 This pipeline is designed to assess worm motility phenotypes from images captured on an upright wide field microscope.
 Our images have the following profile:
@@ -93,7 +94,7 @@ Where:
 * `--rerun-incomplete`: tells Snakemake to check that all file are completely written and to re-run those that are not.
 * `--config`: feeds pipeline-specific configuration parameters to snakemake.
     * `input_dirpath`: The directory where input files are located. If files are located in subdirectories, this is the root filepath for all directories to be analyzed by the snakemake run.
-    * `input_prefix`: Portion of `input_dirpath` to omit from output file names. A file's absolute path is used as the identifier by this pipeline. When an `input_prefix` is supplied, the prefix will be removed from the output filepath (so instead of having `/home/theia/arc_nas/Babu_frik/Justin` in every output file path, this prefix would be removed). This removes non-identifying information from the output filepaths so that they directory structure doesn't become unnecessarily deep.
+    * `input_prefix`: Portion of `input_dirpath` to omit from output file names. A file's absolute path is used as the identifier by this pipeline. When an `input_prefix` is supplied, the prefix will be removed from the output filepath (for example, instead of having `/home/username/` in every output file path, this prefix would be removed). This removes non-identifying information from the output filepaths so that they directory structure doesn't become unnecessarily deep.
     * `output_dirpath`: Directory path to write output files.
 
 ## Data
@@ -101,7 +102,10 @@ Where:
 This pipeline is designed to run on videos (time series of images collected from a single field of view) of live adult *C. elegans*.
 Importantly, the videos should have a relatively homogenous background (i.e., little variation in intensity or contrast).
 It takes raw image files (in Nikon's ND2 format) as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
-All analyzed data are currently available on the NAS (TODO: update to public data location).
+
+![](figures/2024-08-19_N2_pl1_1p5h_005-1.png)
+
+The raw data (N2 format) we analyzed as well as the Tierpsy Tracker outputs are available for download from the BioImage Archive ([accession S-BIAD1563](https://www.ebi.ac.uk/biostudies/bioimages/studies/S-BIAD1563)).
 
 ## Overview
 
@@ -149,14 +153,13 @@ The pipeline follows the following steps.
 **Quality control**:
 
 1. Make a projection from the DoG-filtered TIFF. This creates a summary PNG where all TIFF files from a single time series are overlaid, so that all movement of the worms over the 30 second acquisition is summarized in a single image.
-2. TODO: Compare the Tierpsy tracker mask to the raw image for a single frame.
-3. TODO: Produce summary stats for each field of view.
+2. Compare the Tierpsy tracker mask to the raw image for a single frame.
 
 ### Compute Specifications
 
 We executed this pipeline on a Linux Ubuntu machine.
 While the machine has 64 cores and 512 GB RAM, we ran the pipeline on a single core using a small fraction of the available RAM.
-While many of the components of the pipeline would be run on a Mac with an Intel chip, we have tailored the pipeline for Ubuntu (Tierpsy tracker installation and launch).
+While many of the components of the pipeline would be run on a Mac with an Intel chip, we have tailored the pipeline for Ubuntu (Tierpsy Tracker installation and launch).
 
 ## Contributing
 
