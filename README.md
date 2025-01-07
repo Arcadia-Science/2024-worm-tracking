@@ -103,6 +103,8 @@ This pipeline is designed to run on videos (time series of images collected from
 Importantly, the videos should have a relatively homogenous background (i.e., little variation in intensity or contrast).
 It takes raw image files (in Nikon's ND2 format) as input and outputs motility phenotypes for the worms, statistical analysis comparing strains, and quality control reports.
 
+![](figures/2024-08-19_N2_pl1_1p5h_005-1.png)
+
 The raw data (N2 format) we analyzed as well as the Tierpsy Tracker outputs are available for download from the BioImage Archive ([accession S-BIAD1563](https://www.ebi.ac.uk/biostudies/bioimages/studies/S-BIAD1563)).
 
 ## Overview
